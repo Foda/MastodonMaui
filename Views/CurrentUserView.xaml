@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rxMaui:ReactiveContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
+             x:Class="MastodonMaui.Views.CurrentUserView"
+             xmlns:rxMaui="clr-namespace:ReactiveUI.Maui;assembly=ReactiveUI.Maui"
+             xmlns:views="clr-namespace:MastodonMaui.Views"
+             xmlns:viewModels="clr-namespace:MastodonMaui.ViewModels"
+             x:TypeArguments="viewModels:CurrentUserViewModel">
+    <Grid
+        Padding="8">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="32"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Image
+            x:Name="Avatar"
+            WidthRequest="32"
+            HeightRequest="32"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Grid.Column="0">
+            <Image.Clip>
+                <EllipseGeometry
+                    Center="16,16"
+                    RadiusX="16"
+                    RadiusY="16"/>
+            </Image.Clip>
+        </Image>
+
+        <Label
+            Grid.Column="1"
+            Grid.Row="0"
+            HorizontalOptions="Start"
+            Margin="8,0,0,0">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span
+                        x:Name="DisplayName"
+                        FontAttributes="Bold"/>
+                    <Span Text="{x:Static system:Environment.NewLine}"/>
+                    <Span
+                        x:Name="Username"
+                        TextColor="#BFFFFFFF"/>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+    </Grid>
+</rxMaui:ReactiveContentView>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rxMaui:ReactiveContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MastodonMaui.Views.BootstrapPage"
+             xmlns:rxMaui="clr-namespace:ReactiveUI.Maui;assembly=ReactiveUI.Maui"
+             xmlns:views="clr-namespace:MastodonMaui.Views"
+             xmlns:viewModels="clr-namespace:MastodonMaui.ViewModels"
+             x:TypeArguments="viewModels:BootstrapViewModel"
+             Title="BootstrapPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="Transparent">
+    <VerticalStackLayout
+        Spacing="8"
+        Margin="32">
+        <Image
+            x:Name="LoginImage"
+            Source="dotnet_bot.png"
+            WidthRequest="210"
+            HeightRequest="260"
+            HorizontalOptions="Center"/>
+
+        <Entry
+            x:Name="SiteInstance"
+            Text="https://mastodon.gamedev.place"
+            MaximumWidthRequest="400"/>
+
+        <Button
+            x:Name="LoginButton"
+            Text="Login"
+            HorizontalOptions="Center"/>
+
+        <ActivityIndicator
+            x:Name="ActivitySpinner"
+            HorizontalOptions="Center"
+            WidthRequest="48"/>
+    </VerticalStackLayout>
+</rxMaui:ReactiveContentPage>

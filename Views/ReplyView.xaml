@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rxMaui:ReactiveContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:rxMaui="clr-namespace:ReactiveUI.Maui;assembly=ReactiveUI.Maui"
+             xmlns:views="clr-namespace:MastodonMaui.Views"
+             xmlns:viewModels="clr-namespace:MastodonMaui.ViewModels"
+             x:Class="MastodonMaui.Views.ReplyView"
+             x:TypeArguments="viewModels:ReplyViewModel">
+    <VerticalStackLayout>
+        <views:StatusView
+            x:Name="ReplyToStatus"/>
+
+        <Grid
+            HeightRequest="200">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="55" />
+                <ColumnDefinition Width="8" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Image
+                x:Name="Avatar"
+                WidthRequest="48"
+                HeightRequest="48"
+                VerticalOptions="Start"
+                HorizontalOptions="Center"
+                Grid.Column="0"
+                Grid.Row="1"
+                Margin="0,5,0,0">
+                <Image.Clip>
+                    <EllipseGeometry
+                        Center="24,24"
+                        RadiusX="24"
+                        RadiusY="24"/>
+                </Image.Clip>
+            </Image>
+
+            <Entry
+                x:Name="ReplyText"
+                Grid.Column="2"
+                Text=""
+                HorizontalOptions="FillAndExpand"/>
+        </Grid>
+
+        <HorizontalStackLayout
+            HorizontalOptions="End">
+            <Button
+                x:Name="ReplyButton"
+                Text="Reply"/>
+            <Button
+                x:Name="CancelButton"
+                Text="Cancel"
+                />
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</rxMaui:ReactiveContentView>

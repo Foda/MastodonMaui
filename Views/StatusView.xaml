@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rxMaui:ReactiveContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:rxMaui="clr-namespace:ReactiveUI.Maui;assembly=ReactiveUI.Maui"
+             xmlns:views="clr-namespace:MastodonMaui.Views"
+             xmlns:viewModels="clr-namespace:MastodonMaui.ViewModels"
+             x:Class="MastodonMaui.Views.StatusView"
+             x:TypeArguments="viewModels:StatusViewModel">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0" x:Name="ReblogRow"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="55" />
+            <ColumnDefinition Width="8" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Label
+            x:Name="ReblogIcon"
+            Text="&#xE895;"
+            FontFamily="SegoeMDL2"
+            Grid.Column="0"
+            Grid.Row="0"
+            FontSize="12"
+            HorizontalOptions="End"
+            VerticalOptions="Center"
+            Opacity="0.7"/>
+        <Label
+            x:Name="ReblogDisplayName"
+            Grid.Column="2"
+            Grid.Row="0"
+            FontSize="12"
+            Opacity="0.7"
+            VerticalOptions="Center"/>
+
+        <Rectangle
+            x:Name="ReplyMarker"
+            Fill="White"
+            Stroke="Transparent"
+            StrokeThickness="0"
+            WidthRequest="1"
+            VerticalOptions="Fill"
+            HorizontalOptions="Center"
+            Grid.Column="0"
+            Grid.Row="1"
+            Opacity="0.25"
+            Margin="0,58,0,0"
+            />
+
+        <Image
+            x:Name="Avatar"
+            WidthRequest="48"
+            HeightRequest="48"
+            VerticalOptions="Start"
+            HorizontalOptions="Center"
+            Grid.Column="0"
+            Grid.Row="1"
+            Margin="0,5,0,0">
+            <Image.Clip>
+                <EllipseGeometry
+                    Center="24,24"
+                    RadiusX="24"
+                    RadiusY="24"/>
+            </Image.Clip>
+        </Image>
+
+        <VerticalStackLayout
+            Grid.Column="2"
+            Grid.Row="1"
+            Spacing="4"
+            Padding="0,0,8,0"
+            Margin="0,0,0,8">
+
+            <!-- User for the post -->
+            <HorizontalStackLayout
+                Spacing="4">
+                <Label
+                    x:Name="DisplayName"
+                    FontAttributes="Bold"/>
+                <Label
+                    x:Name="CreatedAt"
+                    Opacity="0.5"/>
+            </HorizontalStackLayout>
+
+            <Label
+                x:Name="UserName"
+                Opacity="0.75"/>
+            <!-- Da content -->
+            <Label
+                x:Name="Content"
+                TextType="Html"/>
+
+            <!-- Reblog, fav, replies -->
+            <HorizontalStackLayout
+                Margin="-14,4,0,0">
+                <Button
+                    x:Name="ReplyButton"
+                    Text="&#xE15F;"
+                    VerticalOptions="Center"
+                    Style="{StaticResource IconButton}"
+                    Clicked="ReplyButton_Clicked"/>
+                <Label
+                    x:Name="ReplyCount"
+                    Opacity="0.7"
+                    VerticalOptions="Center"/>
+
+                <Button
+                    x:Name="ReblogButton"
+                    Text="&#xE895;"
+                    Margin="32,0,0,0"
+                    VerticalOptions="Center"
+                    Style="{StaticResource IconButton}">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button"
+                                     Binding="{Binding DidReblog}"
+                                     Value="true">
+                            <Setter Property="TextColor" Value="#6CCB5F" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Label
+                    x:Name="ReblogCount"
+                    Opacity="0.7"
+                    VerticalOptions="Center">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label"
+                                     Binding="{Binding DidReblog}"
+                                     Value="true">
+                            <Setter Property="TextColor" Value="#6CCB5F" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+
+                <Button
+                    x:Name="FavoriteButton"
+                    Text="&#xEB51;"
+                    Margin="32,0,0,0"
+                    VerticalOptions="Center"
+                    Style="{StaticResource IconButton}">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button"
+                                     Binding="{Binding DidFavorite}"
+                                     Value="true">
+                            <Setter Property="TextColor" Value="#F91880" />
+                            <Setter Property="Text" Value="&#xEB52;" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Label
+                    x:Name="FavoriteCount"
+                    Opacity="0.7"
+                    VerticalOptions="Center">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label"
+                                     Binding="{Binding DidFavorite}"
+                                     Value="true">
+                            <Setter Property="TextColor" Value="#F91880" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout
+            x:Name="Replies"
+            BindableLayout.ItemsSource="{Binding Replies}"
+            HorizontalOptions="Fill"
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="3">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <views:StatusView />
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </VerticalStackLayout>
+    </Grid>
+</rxMaui:ReactiveContentView>
