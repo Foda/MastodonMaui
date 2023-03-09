@@ -67,7 +67,9 @@ public partial class StatusView : ReactiveContentView<StatusViewModel>
 
         popup.Content = new ReplyView()
         {
-            ViewModel = replyVM
+            ViewModel = replyVM,
+            WidthRequest = 500,
+            HeightRequest = 500
         };
         App.Current.MainPage.ShowPopup(popup);
     }
