@@ -88,14 +88,42 @@
             <Label
                 x:Name="UserName"
                 Opacity="0.75"/>
-            <!-- Da content -->
+            
             <Label
                 x:Name="Content"
                 TextType="Html"/>
 
+            <FlexLayout
+                x:Name="ImageMediaAttachments"
+                Margin="0,4,0,0"
+                BindableLayout.ItemsSource="{Binding ImageMediaAttachments}"
+                Wrap="Wrap">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Border 
+                            HeightRequest="300"
+                            WidthRequest="490"
+                            MaximumHeightRequest="520"
+                            MaximumWidthRequest="450"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            Padding="0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="4" />
+                            </Border.StrokeShape>
+                            <Image
+                                Source="{Binding PreviewUrl}"
+                                Aspect="AspectFill"
+                                />
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
+
             <!-- Reblog, fav, replies -->
             <HorizontalStackLayout
-                Margin="-14,4,0,0">
+                Margin="-14,4,0,0"
+                x:Name="StatusActionBar">
                 <Button
                     x:Name="ReplyButton"
                     Text="&#xE15F;"

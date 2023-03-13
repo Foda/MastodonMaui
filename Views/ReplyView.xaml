@@ -6,51 +6,62 @@
              xmlns:viewModels="clr-namespace:MastodonMaui.ViewModels"
              x:Class="MastodonMaui.Views.ReplyView"
              x:TypeArguments="viewModels:ReplyViewModel">
-    <VerticalStackLayout>
-        <views:StatusView
-            x:Name="ReplyToStatus"/>
+    <Border
+         Padding="8"
+         StrokeThickness="0.5"
+         Stroke="#1C1C1C"
+         Background="#2C2C2C">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="4" />
+        </Border.StrokeShape>
+        
+        <VerticalStackLayout>
+            <views:StatusView
+                x:Name="ReplyToStatus"
+                IsReadOnly="True"/>
 
-        <Grid
-            HeightRequest="200">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="55" />
-                <ColumnDefinition Width="8" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+            <Grid
+                HeightRequest="128">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="55" />
+                    <ColumnDefinition Width="8" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <Image
-                x:Name="Avatar"
-                WidthRequest="48"
-                HeightRequest="48"
-                VerticalOptions="Start"
-                HorizontalOptions="Center"
-                Grid.Column="0"
-                Grid.Row="1"
-                Margin="0,5,0,0">
-                <Image.Clip>
-                    <EllipseGeometry
-                        Center="24,24"
-                        RadiusX="24"
-                        RadiusY="24"/>
-                </Image.Clip>
-            </Image>
+                <Image
+                    x:Name="Avatar"
+                    WidthRequest="48"
+                    HeightRequest="48"
+                    VerticalOptions="Start"
+                    HorizontalOptions="Center"
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    Margin="0,5,0,0">
+                    <Image.Clip>
+                        <EllipseGeometry
+                            Center="24,24"
+                            RadiusX="24"
+                            RadiusY="24"/>
+                    </Image.Clip>
+                </Image>
 
-            <Entry
-                x:Name="ReplyText"
-                Grid.Column="2"
-                Text=""
-                HorizontalOptions="FillAndExpand"/>
-        </Grid>
+                <Editor
+                    x:Name="ReplyText"
+                    Grid.Column="2"
+                    Placeholder="Share your reply"
+                    HorizontalOptions="FillAndExpand"/>
+            </Grid>
 
-        <HorizontalStackLayout
-            HorizontalOptions="End">
-            <Button
-                x:Name="ReplyButton"
-                Text="Reply"/>
-            <Button
-                x:Name="CancelButton"
-                Text="Cancel"
-                />
-        </HorizontalStackLayout>
-    </VerticalStackLayout>
+            <HorizontalStackLayout
+                HorizontalOptions="End">
+                <Button
+                    x:Name="ReplyButton"
+                    Text="Reply"/>
+                <Button
+                    x:Name="CancelButton"
+                    Text="Cancel"
+                    />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Border>
 </rxMaui:ReactiveContentView>

@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace MastodonLib.Models
 {
-    internal class Status
+    internal class Status : ApiObject
     {
-        public string Id { get; set; }
 
         [JsonPropertyName("created_at")]
         public DateTime CreatedAt { get; set; }
@@ -65,8 +64,10 @@ namespace MastodonLib.Models
         public string Uri { get; set; }
         public Account Account { get; set; }
         public Status Reblog { get; set; }
-        public List<Attachment> MediaAttachments { get; set; }
         public List<Mention> Mentions { get; set; }
         public List<Tag> Tags { get; set; }
+
+        [JsonPropertyName("media_attachments")]
+        public List<MediaAttachment> MediaAttachments { get; set; }
     }
 }

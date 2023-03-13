@@ -25,6 +25,9 @@ public partial class TimelinePage : ReactiveContentPage<TimelineViewModel>
 
             this.OneWayBind(ViewModel, vm => vm.Items, v => v.StatusItems.ItemsSource)
                 .DisposeWith(disposable);
+
+            this.OneWayBind(ViewModel, vm => vm.IsLoading, v => v.TimelineLoading.IsRunning)
+                .DisposeWith(disposable);
         });
 
         this.Loaded += TimelinePage_Loaded;

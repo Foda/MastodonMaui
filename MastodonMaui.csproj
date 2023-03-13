@@ -44,7 +44,8 @@
 		<MauiImage Include="Resources\Images\notification.svg" />
 		<MauiImage Include="Resources\Images\home_color.svg" BaseSize="24,24" />
 		<MauiImage Include="Resources\Images\notifications_color.svg" BaseSize="24,24" />
-
+		<MauiImage Include="Resources\Images\toots.png" />
+		
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
 

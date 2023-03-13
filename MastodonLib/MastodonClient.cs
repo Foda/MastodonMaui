@@ -1,6 +1,7 @@
 ﻿using MastodonLib.Auth;
 using MastodonLib.Models;
 using Refit;
+using System.Collections.Generic;
 
 namespace MastodonLib
 {
@@ -28,6 +29,34 @@ namespace MastodonLib
             int limit = 20, string sinceId = null, string maxId = null)
         {
             return await _api.GetPublicTimeline(limit, sinceId, maxId);
+        }
+
+        public async Task<Status> PostStatus(string status, string replyToStatusId = null)
+        {
+            var theBody = new Dictionary<string, object> {
+                { "status", status }
+            };
+
+            if (!string.IsNullOrEmpty(replyToStatusId))
+            {
+                theBody.Add("in_reply_to_id", replyToStatusId);
+            }
+
+            return await _api.PostStatus(theBody);
+        }
+
+        public async Task<ScheduledStatus> PostScheduledStatus(string status, DateTime scheduledAt, string replyToStatusId = null)
+        {
+            var theBody = new Dictionary<string, object> {
+                { "status", status },
+                { "scheduled_at", scheduledAt.ToString("o") }
+            };
+
+            if (!string.IsNullOrEmpty(replyToStatusId))
+            {
+                theBody.Add("in_reply_to_id", replyToStatusId);
+            }
+            return await _api.PostScheduledStatus(theBody);
         }
 
         public async Task<Account> GetCurrentUser()

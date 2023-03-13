@@ -2,9 +2,8 @@
 
 namespace MastodonLib.Models
 {
-    internal class Account
+    internal class Account : ApiObject
     {
-        public string Id { get; set; }
         public string UserName { get; set; }
 
         [JsonPropertyName("display_name")]

@@ -23,6 +23,9 @@
     <MauiXaml Update="Views\ReplyView.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
+    <MauiXaml Update="Views\StatusPage.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
     <MauiXaml Update="Views\StatusView.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>

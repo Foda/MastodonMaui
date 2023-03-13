@@ -13,11 +13,17 @@ namespace MastodonMaui.ViewModels
         public ObservableCollection<StatusViewModel> Items { get; }
         public ReactiveCommand<Unit, Unit> RefreshTimeline { get; }
 
+        readonly ObservableAsPropertyHelper<bool> _isLoading;
+        public bool IsLoading => _isLoading.Value;
+
         internal TimelineViewModel(ISiteInstance siteInstance)
         {
             _siteInstance = siteInstance;
+            
             Items = new ObservableCollection<StatusViewModel>();
+
             RefreshTimeline = ReactiveCommand.CreateFromTask(RefreshTimeline_Impl);
+            _isLoading = RefreshTimeline.IsExecuting.ToProperty(this, nameof(IsLoading));
         }
 
         private async Task RefreshTimeline_Impl()

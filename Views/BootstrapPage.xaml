@@ -14,9 +14,9 @@
         Margin="32">
         <Image
             x:Name="LoginImage"
-            Source="dotnet_bot.png"
+            Source="toots.png"
             WidthRequest="210"
-            HeightRequest="260"
+            Aspect="AspectFit"
             HorizontalOptions="Center"/>
 
         <Entry

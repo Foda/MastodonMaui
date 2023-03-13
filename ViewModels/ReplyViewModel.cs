@@ -1,11 +1,7 @@
-﻿using MastodonMaui.Services;
+﻿using MastodonLib.Models;
+using MastodonMaui.Services;
 using ReactiveUI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reactive;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MastodonMaui.ViewModels
 {
@@ -14,34 +10,46 @@ namespace MastodonMaui.ViewModels
         private readonly ISiteInstance _siteInstance;
 
         private StatusViewModel _targetStatus;
-        public StatusViewModel TargetStatus
+        internal StatusViewModel TargetStatus
         {
             get => _targetStatus;
             private set => this.RaiseAndSetIfChanged(ref _targetStatus, value);
         }
 
         private string _replyText = "";
-        public string ReplyText
+        internal string ReplyText
         {
             get => _replyText;
             set => this.RaiseAndSetIfChanged(ref _replyText, value);
         }
 
-        public ReactiveCommand<Unit, Unit> SendReply { get; }
-        public ReactiveCommand<Unit, Unit> CancelReply { get; }
+        internal ReactiveCommand<Unit, Status> SendReply { get; }
+        internal ReactiveCommand<Unit, Unit> CancelReply { get; }
 
         internal ReplyViewModel(StatusViewModel targetStatus, ISiteInstance siteInstance)
         {
             _siteInstance = siteInstance;
             TargetStatus = targetStatus;
 
-            SendReply = ReactiveCommand.CreateFromTask(SendReply_Impl);
+            var canSendReply = this.WhenAnyValue(vm => vm.ReplyText, 
+                (replyText) => !string.IsNullOrEmpty(replyText));
+
+            SendReply = ReactiveCommand.CreateFromTask(SendReply_Impl, canSendReply);
             CancelReply = ReactiveCommand.Create(() => { });
         }
 
-        private async Task SendReply_Impl()
+        private async Task<Status> SendReply_Impl()
         {
-
+            try
+            {
+                Status newPost = await _siteInstance.Client.PostStatus(ReplyText, TargetStatus.Id);
+                return newPost;
+            }
+            catch (Exception ex) 
+            {
+            }
+            
+            return null;
         }
     }
 }

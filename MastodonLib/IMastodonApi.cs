@@ -41,6 +41,12 @@ namespace MastodonLib
 
         [Post("/api/v1/statuses/{id}/unreblog")]
         Task UndoReblogStatus(string id);
+
+        [Post("/api/v1/statuses")]
+        Task<Status> PostStatus([Body(BodySerializationMethod.UrlEncoded)] Dictionary<string, object> data);
+
+        [Post("/api/v1/statuses")]
+        Task<ScheduledStatus> PostScheduledStatus([Body(BodySerializationMethod.UrlEncoded)] Dictionary<string, object> data);
     }
 
     internal interface IMastodonAuthApi

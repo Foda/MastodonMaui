@@ -1,16 +1,35 @@
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Views;
 using MastodonMaui.ViewModels;
 using ReactiveUI;
 using ReactiveUI.Maui;
 using System.Reactive.Disposables;
-using CommunityToolkit.Maui.Views;
 
 namespace MastodonMaui.Views;
 
 public partial class StatusView : ReactiveContentView<StatusViewModel>
 {
-	public StatusView()
-	{
-		InitializeComponent();
+    public static readonly BindableProperty IsReadOnlyProperty = BindableProperty.Create(
+            "IsReadOnly", typeof(bool), typeof(StatusView), false, propertyChanged: OnIsReadOnlyChanged);
+
+    public bool IsReadOnly
+    {
+        get { return (bool)GetValue(IsReadOnlyProperty); }
+        set { SetValue(IsReadOnlyProperty, value); }
+    }
+
+    private static void OnIsReadOnlyChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        StatusView view = bindable as StatusView;
+        if (view != null)
+        {
+            view.StatusActionBar.IsVisible = !(bool)newValue;
+        }
+    }
+
+    public StatusView()
+    {
+        InitializeComponent();
 
         this.WhenActivated(disposable =>
         {
@@ -52,14 +71,32 @@ public partial class StatusView : ReactiveContentView<StatusViewModel>
                 .DisposeWith(disposable);
             this.BindCommand(ViewModel, vm => vm.ToggleReblogged, v => v.ReblogButton)
                 .DisposeWith(disposable);
+
         });
+
+        StatusActionBar.IsVisible = !IsReadOnly;
     }
 
     private void ReplyButton_Clicked(object sender, EventArgs e)
     {
-        Popup popup = new();
+        Popup popup = new()
+        {
+            Color = Colors.Transparent,
+            CanBeDismissedByTappingOutsideOfPopup = false
+        };
         
         ReplyViewModel replyVM = new(ViewModel, ViewModel.SiteInstance);
+        replyVM.SendReply.Subscribe(async newPost =>
+        {
+            if (newPost != null)
+            {
+                popup.Close();
+                
+                var toast = Toast.Make("Your post was sent",
+                    CommunityToolkit.Maui.Core.ToastDuration.Short);
+                await toast.Show();
+            }
+        });
         replyVM.CancelReply.Subscribe(_ =>
         {
             popup.Close();

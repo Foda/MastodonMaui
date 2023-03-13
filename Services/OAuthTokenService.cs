@@ -60,11 +60,12 @@ namespace MastodonMaui.Services
             var result = await WinUIEx.WebAuthenticator.AuthenticateAsync(
                 new Uri(auth), new Uri(CALLBACK_URI));
 #else
-            var result = await Microsoft.Maui.Authentication.WebAuthenticator.AuthenticateAsync(new WebAuthenticatorOptions()
-            {
-                Url = new Uri(auth),
-                CallbackUrl = new Uri(CALLBACK_URI)
-            });
+            var result = await Microsoft.Maui.Authentication.WebAuthenticator.AuthenticateAsync(
+                new WebAuthenticatorOptions()
+                {
+                    Url = new Uri(auth),
+                    CallbackUrl = new Uri(CALLBACK_URI)
+                });
 #endif
             _authCode = result.Properties["code"];
         }

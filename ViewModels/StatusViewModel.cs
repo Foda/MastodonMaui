@@ -56,6 +56,7 @@ namespace MastodonMaui.ViewModels
         }
 
         public ObservableCollection<StatusViewModel> Replies { get; }
+        public ObservableCollection<MediaAttachment> ImageMediaAttachments { get; }
 
         public ReactiveCommand<Unit, Unit> ToggleFavorited { get; }
         public ReactiveCommand<Unit, Unit> ToggleReblogged { get; }
@@ -71,6 +72,23 @@ namespace MastodonMaui.ViewModels
 
             ToggleFavorited = ReactiveCommand.CreateFromTask(ToggleFavorited_Impl);
             ToggleReblogged = ReactiveCommand.CreateFromTask(ToggleReblogged_Impl);
+
+            ImageMediaAttachments = new();
+
+            if (IsReblog)
+            {
+                foreach (var item in _model.Reblog.MediaAttachments.Where(x => x.Type == "image"))
+                {
+                    ImageMediaAttachments.Add(item);
+                }
+            }
+            else
+            {
+                foreach (var item in _model.MediaAttachments.Where(x => x.Type == "image"))
+                {
+                    ImageMediaAttachments.Add(item);
+                }
+            }
         }
 
         private async Task ToggleFavorited_Impl()
