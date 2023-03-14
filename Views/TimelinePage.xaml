@@ -24,23 +24,29 @@
             RemainingItemsThreshold="4"
             RemainingItemsThresholdReached="StatusItems_RemainingItemsThresholdReached">
             <CollectionView.Header>
-                <Grid
-                    BackgroundColor="#09FFFFFF"
+                <Border
+                    Background="#09FFFFFF"
+                    StrokeThickness="0"
                     Padding="12,8,12,8">
-                    <Label
-                        Text="Home"
-                        FontAttributes="Bold"
-                        FontSize="24"
-                        VerticalOptions="Center"
-                        HorizontalOptions="Start"/>
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Grid>
+                        <Label
+                            Text="Home"
+                            FontAttributes="Bold"
+                            FontSize="24"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"/>
 
-                    <Button
-                        x:Name="RefreshButton"
-                        Text="&#xE149;"
-                        VerticalOptions="Center"
-                        HorizontalOptions="End"
-                        Style="{StaticResource IconButton}"/>
-                </Grid>
+                        <Button
+                            x:Name="RefreshButton"
+                            Text="&#xE149;"
+                            VerticalOptions="Center"
+                            HorizontalOptions="End"
+                            Style="{StaticResource IconButton}"/>
+                    </Grid>
+                </Border>
             </CollectionView.Header>
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout 
@@ -80,8 +86,7 @@
 
             <SearchBar
                 x:Name="Search"
-                Placeholder="Search"
-                />
+                Placeholder="Search"/>
 
             <views:TrendingView
                 x:Name="TrendingView"/>

@@ -4,9 +4,10 @@
              x:Class="MastodonMaui.Views.TrendingView">
     <Border
         Background="#09FFFFFF"
-        StrokeThickness="0">
+        StrokeThickness="0"
+        Padding="8">
         <Border.StrokeShape>
-            <RoundRectangle CornerRadius="4" />
+            <RoundRectangle CornerRadius="8" />
         </Border.StrokeShape>
         <VerticalStackLayout
             Padding="8"
