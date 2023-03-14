@@ -12,14 +12,17 @@
         Margin="24,8,8,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="580"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="16"/>
+            <ColumnDefinition Width="340"/>
         </Grid.ColumnDefinitions>
 
         <CollectionView 
             x:Name="StatusItems"
             Grid.Column="0"
-            SelectionMode="None"
-            HorizontalOptions="Fill">
+            SelectionMode="Single"
+            HorizontalOptions="Fill"
+            RemainingItemsThreshold="4"
+            RemainingItemsThresholdReached="StatusItems_RemainingItemsThresholdReached">
             <CollectionView.Header>
                 <Grid
                     BackgroundColor="#09FFFFFF"
@@ -69,5 +72,19 @@
             WidthRequest="48"
             HeightRequest="48"
             />
+
+        <VerticalStackLayout
+            Grid.Column="2"
+            Spacing="16"
+            HorizontalOptions="Fill">
+
+            <SearchBar
+                x:Name="Search"
+                Placeholder="Search"
+                />
+
+            <views:TrendingView
+                x:Name="TrendingView"/>
+        </VerticalStackLayout>
     </Grid>
 </rxMaui:ReactiveContentPage>

@@ -31,6 +31,16 @@ namespace MastodonLib
             return await _api.GetPublicTimeline(limit, sinceId, maxId);
         }
 
+        /// <summary>
+        /// View statuses above and below this status in the thread
+        /// </summary>
+        /// <param name="status_id"></param>
+        /// <returns></returns>
+        public async Task<StatusContext> GetStatusContext(string status_id)
+        {
+            return await _api.GetStatusContext(status_id);
+        }
+
         public async Task<Status> PostStatus(string status, string replyToStatusId = null)
         {
             var theBody = new Dictionary<string, object> {

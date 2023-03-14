@@ -1,8 +1,5 @@
-﻿using MastodonMaui.Services;
-using MastodonMaui.ViewModels;
+﻿using MastodonMaui.ViewModels;
 using MastodonMaui.Views;
-using ReactiveUI;
-using Splat;
 
 namespace MastodonMaui;
 

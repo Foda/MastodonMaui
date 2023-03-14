@@ -14,6 +14,7 @@ namespace MastodonMaui.ViewModels
         internal ISiteInstance SiteInstance => _siteInstance;
 
         public string Id => _model.Id;
+        public string ReblogId => IsReblog ? _model.Reblog.Id : "";
         public bool IsReblog => _model.Reblog != null;
         public bool IsReply => !string.IsNullOrEmpty(ReplyToId);
         public string ReplyToId => _model.InReplyToId;

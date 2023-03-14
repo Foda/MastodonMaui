@@ -2,7 +2,7 @@
 
 namespace MastodonLib.Models
 {
-    internal class Account : ApiObject
+    public class Account : ApiObject
     {
         public string UserName { get; set; }
 

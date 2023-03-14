@@ -8,6 +8,11 @@
              x:TypeArguments="viewModels:StatusPageViewModel"
              Title="StatusPage"
              Background="Transparent">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior 
+            IsEnabled="False"
+            IsVisible="False"/>
+    </Shell.BackButtonBehavior>
     <Grid
         Margin="24,8,8,0">
         <Grid.ColumnDefinitions>
@@ -21,21 +26,27 @@
             SelectionMode="None"
             HorizontalOptions="Fill">
             <CollectionView.Header>
-                <VerticalStackLayout>
-                    <Grid
-                        BackgroundColor="#09FFFFFF"
-                        Padding="12,8,12,8">
+                <Border
+                    Background="#09FFFFFF"
+                    StrokeThickness="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="16,16,0,0" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout
+                        Padding="8,8,12,8"
+                        Spacing="16">
                         <Button
                             x:Name="BackButton"
                             Text="Back"
+                            ImageSource="back.png"
                             VerticalOptions="Center"
-                            HorizontalOptions="Start"/>
-                    </Grid>
-
-                    <views:StatusView
-                        x:Name="ParentStatus"
-                        Margin="0,0,16,0"/>
-                </VerticalStackLayout>
+                            HorizontalOptions="Start"
+                            Style="{StaticResource IconButton}"
+                            TextColor="{StaticResource Secondary}"/>
+                        <views:StatusView
+                            x:Name="ParentStatus"/>
+                    </VerticalStackLayout>
+                </Border>
             </CollectionView.Header>
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout 
@@ -44,15 +55,26 @@
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border
-                        Padding="8"
-                        StrokeThickness="0"
-                        Background="Transparent">
+                    <VerticalStackLayout
+                        Padding="8">
                         <views:StatusView
                             Margin="0,0,16,0"/>
-                    </Border>
+                        <BoxView
+                          Color="#09FFFFFF"
+                          HeightRequest="2"
+                          HorizontalOptions="Fill" />
+                    </VerticalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
+        <ActivityIndicator
+            x:Name="IsLoading"
+            Grid.Column="0"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            WidthRequest="48"
+            HeightRequest="48"
+            />
     </Grid>
 </rxMaui:ReactiveContentPage>

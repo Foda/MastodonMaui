@@ -27,6 +27,9 @@ namespace MastodonLib
         Task<List<Status>> GetPublicTimeline(
             [Query] int limit = 20, [Query] string since_id = null, [Query] string max_id = null);
 
+        [Get("/api/v1/statuses/{status_id}/context")]
+        Task<StatusContext> GetStatusContext(string status_id);
+
         [Get("/api/v1/accounts/verify_credentials")]
         Task<Account> GetCurrentUser();
 

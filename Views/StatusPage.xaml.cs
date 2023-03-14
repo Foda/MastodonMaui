@@ -11,12 +11,19 @@ public partial class StatusPage : ReactiveContentPage<StatusPageViewModel>
 	{
 		InitializeComponent();
 
+        this.ViewModel = new StatusPageViewModel();
         this.WhenActivated(disposable =>
         {
-            this.OneWayBind(ViewModel, vm => vm.ParentStatus, v => v.ParentStatus)
+            this.OneWayBind(ViewModel, vm => vm.ParentStatus, v => v.ParentStatus.ViewModel)
                 .DisposeWith(disposable);
 
             this.OneWayBind(ViewModel, vm => vm.Replies, v => v.ReplyItems.ItemsSource)
+                .DisposeWith(disposable);
+
+            this.OneWayBind(ViewModel, vm => vm.IsLoading, v => v.IsLoading.IsRunning)
+                .DisposeWith(disposable);
+
+            this.BindCommand(ViewModel, vm => vm.NavigateBack, v => v.BackButton)
                 .DisposeWith(disposable);
         });
     }

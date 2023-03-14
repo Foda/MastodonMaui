@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MastodonLib.Models
 {
-    internal class Status : ApiObject
+    public class Status : ApiObject
     {
 
         [JsonPropertyName("created_at")]

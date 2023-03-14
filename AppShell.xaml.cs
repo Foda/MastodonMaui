@@ -1,6 +1,7 @@
 ﻿using MastodonLib.Models;
 using MastodonMaui.Services;
 using MastodonMaui.ViewModels;
+using MastodonMaui.Views;
 
 namespace MastodonMaui;
 
@@ -16,5 +17,7 @@ public partial class AppShell : Shell
 
         TimelinePage.SetInstance(_siteInstanceService);
         CurrentUser.ViewModel = new CurrentUserViewModel(currentUser);
+
+        Routing.RegisterRoute(MastodonMaui.Navigation.StatusPageRoute, typeof(StatusPage));
     }
 }

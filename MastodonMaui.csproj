@@ -45,6 +45,7 @@
 		<MauiImage Include="Resources\Images\home_color.svg" BaseSize="24,24" />
 		<MauiImage Include="Resources\Images\notifications_color.svg" BaseSize="24,24" />
 		<MauiImage Include="Resources\Images\toots.png" />
+		<MauiImage Include="Resources\Images\back.svg" BaseSize="16,16" />
 		
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -93,10 +94,16 @@
 	  <MauiXaml Update="Views\ReplyView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\StatusPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\StatusView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\TimelinePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\TrendingView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

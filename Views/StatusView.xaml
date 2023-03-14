@@ -87,7 +87,8 @@
 
             <Label
                 x:Name="UserName"
-                Opacity="0.75"/>
+                Opacity="0.75"
+                Margin="0,-4,0,0"/>
             
             <Label
                 x:Name="Content"

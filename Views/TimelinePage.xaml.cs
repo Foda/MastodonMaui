@@ -23,6 +23,9 @@ public partial class TimelinePage : ReactiveContentPage<TimelineViewModel>
             this.BindCommand(ViewModel, vm => vm.RefreshTimeline, v => v.RefreshButton)
                 .DisposeWith(disposable);
 
+            this.Bind(ViewModel, vm => vm.SelectedStatus, v => v.StatusItems.SelectedItem)
+                .DisposeWith(disposable);
+
             this.OneWayBind(ViewModel, vm => vm.Items, v => v.StatusItems.ItemsSource)
                 .DisposeWith(disposable);
 
@@ -37,5 +40,10 @@ public partial class TimelinePage : ReactiveContentPage<TimelineViewModel>
     {
         this.Loaded -= TimelinePage_Loaded;
         await ViewModel.RefreshTimeline.Execute();
+    }
+
+    private async void StatusItems_RemainingItemsThresholdReached(object sender, EventArgs e)
+    {
+        await ViewModel.LoadMoreTimelineItems.Execute();
     }
 }
