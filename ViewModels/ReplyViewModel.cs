@@ -1,7 +1,10 @@
 ﻿using MastodonLib.Models;
 using MastodonMaui.Services;
 using ReactiveUI;
+using Splat;
+using System.Collections.ObjectModel;
 using System.Reactive;
+using System.Reactive.Linq;
 
 namespace MastodonMaui.ViewModels
 {
@@ -9,11 +12,11 @@ namespace MastodonMaui.ViewModels
     {
         private readonly ISiteInstance _siteInstance;
 
-        private StatusViewModel _targetStatus;
-        internal StatusViewModel TargetStatus
+        private StatusViewModel _replyToStatus;
+        internal StatusViewModel ReplyToStatus
         {
-            get => _targetStatus;
-            private set => this.RaiseAndSetIfChanged(ref _targetStatus, value);
+            get => _replyToStatus;
+            private set => this.RaiseAndSetIfChanged(ref _replyToStatus, value);
         }
 
         private string _replyText = "";
@@ -23,27 +26,73 @@ namespace MastodonMaui.ViewModels
             set => this.RaiseAndSetIfChanged(ref _replyText, value);
         }
 
+        private string _visibility = "";
+        internal string Visibility
+        {
+            get => _visibility;
+            set => this.RaiseAndSetIfChanged(ref _visibility, value);
+        }
+
+        private ObservableCollection<string> _visibilitySettingList;
+        internal ObservableCollection<string> VisibilitySettingList
+        {
+            get => _visibilitySettingList;
+            private set => this.RaiseAndSetIfChanged(ref _visibilitySettingList, value);
+        }
+
+        readonly ObservableAsPropertyHelper<int> _remaingCharacters;
+        public int RemaingCharacters => _remaingCharacters.Value;
+
+        readonly ObservableAsPropertyHelper<bool> _isSendingReply;
+        public bool IsSendingReply => _isSendingReply.Value;
+
+        internal ICurrentUserService CurrentUser { get; }
+
         internal ReactiveCommand<Unit, Status> SendReply { get; }
         internal ReactiveCommand<Unit, Unit> CancelReply { get; }
 
-        internal ReplyViewModel(StatusViewModel targetStatus, ISiteInstance siteInstance)
+        private const int CHARACTER_LIMIT = 500;
+
+        internal ReplyViewModel(StatusViewModel replyToStatus = null,
+            ISiteInstance siteInstance = null, ICurrentUserService currentUser = null)
         {
-            _siteInstance = siteInstance;
-            TargetStatus = targetStatus;
+            ReplyToStatus = replyToStatus;
+            _siteInstance = siteInstance ?? Locator.Current.GetService<ISiteInstance>();
+            CurrentUser = currentUser ?? Locator.Current.GetService<ICurrentUserService>();
 
-            var canSendReply = this.WhenAnyValue(vm => vm.ReplyText, 
-                (replyText) => !string.IsNullOrEmpty(replyText));
+            // TODO: map to enum and tie to API model?
+            // See: https://docs.joinmastodon.org/methods/statuses/#form-data-parameters
+            VisibilitySettingList = new()
+            {
+                "public",
+                "unlisted",
+                "private",
+                "direct"
+            };
+            Visibility = VisibilitySettingList[0];
 
-            SendReply = ReactiveCommand.CreateFromTask(SendReply_Impl, canSendReply);
+            var canSendPost = this.WhenAnyValue(vm => vm.ReplyText, 
+                (replyText) => !string.IsNullOrEmpty(replyText) && replyText.Length <= CHARACTER_LIMIT);
+
+            SendReply = ReactiveCommand.CreateFromTask(SendReply_Impl, canSendPost);
             CancelReply = ReactiveCommand.Create(() => { });
+
+            _isSendingReply = SendReply.IsExecuting.ToProperty(this, nameof(IsSendingReply));
+            _remaingCharacters = this.WhenAnyValue(vm => vm.ReplyText)
+                .Select(text => CHARACTER_LIMIT - text.Length)
+                .ToProperty(this, nameof(RemaingCharacters));
         }
 
         private async Task<Status> SendReply_Impl()
         {
             try
             {
-                Status newPost = await _siteInstance.Client.PostStatus(ReplyText, TargetStatus.Id);
-                return newPost;
+                if (ReplyToStatus != null)
+                {
+                    Status newPost = await _siteInstance.Client.PostStatus(
+                        ReplyText, Visibility, ReplyToStatus.Id);
+                    return newPost;
+                }
             }
             catch (Exception ex) 
             {

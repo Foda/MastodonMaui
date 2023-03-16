@@ -19,7 +19,15 @@ namespace MastodonLib
 
         public async Task<AuthToken> GetOAuthToken(string client_id, string client_secret, string code)
         {
-            return await _api.GetOAuthToken("authorization_code", code, client_id, client_secret);
+            try
+            {
+                var token = await _api.GetOAuthToken("authorization_code", code, client_id, client_secret);
+                return token;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
     }
 }

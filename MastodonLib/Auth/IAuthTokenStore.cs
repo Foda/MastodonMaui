@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MastodonLib.Models;
 
 namespace MastodonLib.Auth
 {
     internal interface IAuthTokenStore
     {
+        void ClearToken();
         Task<string> GetToken();
     }
 }

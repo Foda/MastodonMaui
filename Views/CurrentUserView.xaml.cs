@@ -19,6 +19,8 @@ public partial class CurrentUserView : ReactiveContentView<CurrentUserViewModel>
                 .DisposeWith(disposable);
             this.OneWayBind(ViewModel, vm => vm.Account.UserName, v => v.Username.Text, username => $"@{username}")
                 .DisposeWith(disposable);
+            this.BindCommand(ViewModel, vm => vm.Logout, v => v.Logout)
+                .DisposeWith(disposable);
         });
     }
 }

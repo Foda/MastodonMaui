@@ -56,11 +56,23 @@ public partial class StatusView : ReactiveContentView<StatusViewModel>
                 .DisposeWith(disposable);
 
             // Status counters
-            this.OneWayBind(ViewModel, vm => vm.ReblogCount, v => v.ReblogCount.Text)
+            this.OneWayBind(ViewModel, vm => vm.ReblogCount, v => v.ReblogButton.Text)
                 .DisposeWith(disposable);
-            this.OneWayBind(ViewModel, vm => vm.FavoriteCount, v => v.FavoriteCount.Text)
+            this.OneWayBind(ViewModel, vm => vm.FavoriteCount, v => v.FavoriteButton.Text)
                 .DisposeWith(disposable);
-            this.OneWayBind(ViewModel, vm => vm.RepliesCount, v => v.ReplyCount.Text)
+            this.OneWayBind(ViewModel, vm => vm.RepliesCount, v => v.ReplyButton.Text)
+                .DisposeWith(disposable);
+
+            this.OneWayBind(ViewModel, vm => vm.DidReblog, v => v.ReblogGlyph.Color,
+                didReblog => didReblog ? Color.FromArgb("#FF6CCB5F") : Color.FromArgb("#FFFFFFFF"))
+                .DisposeWith(disposable);
+
+            this.OneWayBind(ViewModel, vm => vm.DidFavorite, v => v.FavoriteGlyph.Color,
+                didFav => didFav ? Color.FromArgb("#FFF91880") : Color.FromArgb("#FFFFFFFF"))
+                .DisposeWith(disposable);
+
+            this.OneWayBind(ViewModel, vm => vm.DidFavorite, v => v.FavoriteGlyph.Glyph,
+                didFav => didFav ? "\uEB52" : "\uEB51")
                 .DisposeWith(disposable);
 
             this.OneWayBind(ViewModel, vm => vm.Replies, v => v.ReplyMarker.IsVisible,
@@ -71,7 +83,6 @@ public partial class StatusView : ReactiveContentView<StatusViewModel>
                 .DisposeWith(disposable);
             this.BindCommand(ViewModel, vm => vm.ToggleReblogged, v => v.ReblogButton)
                 .DisposeWith(disposable);
-
         });
 
         StatusActionBar.IsVisible = !IsReadOnly;
@@ -85,7 +96,7 @@ public partial class StatusView : ReactiveContentView<StatusViewModel>
             CanBeDismissedByTappingOutsideOfPopup = false
         };
         
-        ReplyViewModel replyVM = new(ViewModel, ViewModel.SiteInstance);
+        ReplyViewModel replyVM = new(ViewModel);
         replyVM.SendReply.Subscribe(async newPost =>
         {
             if (newPost != null)
@@ -106,7 +117,7 @@ public partial class StatusView : ReactiveContentView<StatusViewModel>
         {
             ViewModel = replyVM,
             WidthRequest = 500,
-            HeightRequest = 500
+            HeightRequest = 450
         };
         App.Current.MainPage.ShowPopup(popup);
     }

@@ -12,6 +12,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="32"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="40"/>
         </Grid.ColumnDefinitions>
 
         <Image
@@ -46,5 +47,20 @@
                 </FormattedString>
             </Label.FormattedText>
         </Label>
+
+        <Button
+            x:Name="UserMenu"
+            Text="&#xE10C;"
+            VerticalOptions="Center"
+            Grid.Column="2"
+            Style="{StaticResource IconButton}">
+            <FlyoutBase.ContextFlyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem
+                        x:Name="Logout"
+                        Text="Logout"/>
+                </MenuFlyout>
+            </FlyoutBase.ContextFlyout>
+        </Button>
     </Grid>
 </rxMaui:ReactiveContentView>

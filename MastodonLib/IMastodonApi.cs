@@ -30,6 +30,9 @@ namespace MastodonLib
         [Get("/api/v1/statuses/{status_id}/context")]
         Task<StatusContext> GetStatusContext(string status_id);
 
+        [Get("/api/v1/trends/tags")]
+        Task<List<Tag>> GetTrendingTags([Query] int limit = 5, [Query] int offset = 0);
+
         [Get("/api/v1/accounts/verify_credentials")]
         Task<Account> GetCurrentUser();
 

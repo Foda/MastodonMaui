@@ -1,6 +1,7 @@
 ﻿using MastodonLib.Models;
 using MastodonMaui.Services;
 using ReactiveUI;
+using Splat;
 using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -31,8 +32,9 @@ namespace MastodonMaui.ViewModels
         public ReactiveCommand<Unit, Unit> FetchStatusContext { get; }
         public ReactiveCommand<Unit, Unit> NavigateBack { get; }
 
-        internal StatusPageViewModel()
+        internal StatusPageViewModel(ISiteInstance siteInstance = null)
         {
+            SiteInstance = siteInstance ?? Locator.Current.GetService<ISiteInstance>();
             NavigateBack = ReactiveCommand.CreateFromTask(NavigateBack_Impl);
             FetchStatusContext = ReactiveCommand.CreateFromTask(FetchStatusContext_Impl);
 
@@ -46,7 +48,6 @@ namespace MastodonMaui.ViewModels
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            SiteInstance = (ISiteInstance)query[Navigation.SiteInstanceVmQuery];
             ParentStatus = (StatusViewModel)query[Navigation.StatusPageVmQuery];
         }
 

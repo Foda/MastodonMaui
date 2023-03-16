@@ -125,20 +125,22 @@
             <HorizontalStackLayout
                 Margin="-14,4,0,0"
                 x:Name="StatusActionBar">
+
                 <Button
                     x:Name="ReplyButton"
-                    Text="&#xE15F;"
                     VerticalOptions="Center"
                     Style="{StaticResource IconButton}"
-                    Clicked="ReplyButton_Clicked"/>
-                <Label
-                    x:Name="ReplyCount"
-                    Opacity="0.7"
-                    VerticalOptions="Center"/>
+                    Clicked="ReplyButton_Clicked">
+                    <Button.ImageSource>
+                        <FontImageSource 
+                            Glyph="&#xE15F;"
+                            FontFamily="SegoeMDL2"
+                            Size="14"/>
+                    </Button.ImageSource>
+                </Button>
 
                 <Button
                     x:Name="ReblogButton"
-                    Text="&#xE895;"
                     Margin="32,0,0,0"
                     VerticalOptions="Center"
                     Style="{StaticResource IconButton}">
@@ -149,23 +151,17 @@
                             <Setter Property="TextColor" Value="#6CCB5F" />
                         </DataTrigger>
                     </Button.Triggers>
+                    <Button.ImageSource>
+                        <FontImageSource 
+                            Glyph="&#xE895;"
+                            FontFamily="SegoeMDL2"
+                            Size="14"
+                            x:Name="ReblogGlyph"/>
+                    </Button.ImageSource>
                 </Button>
-                <Label
-                    x:Name="ReblogCount"
-                    Opacity="0.7"
-                    VerticalOptions="Center">
-                    <Label.Triggers>
-                        <DataTrigger TargetType="Label"
-                                     Binding="{Binding DidReblog}"
-                                     Value="true">
-                            <Setter Property="TextColor" Value="#6CCB5F" />
-                        </DataTrigger>
-                    </Label.Triggers>
-                </Label>
 
                 <Button
                     x:Name="FavoriteButton"
-                    Text="&#xEB51;"
                     Margin="32,0,0,0"
                     VerticalOptions="Center"
                     Style="{StaticResource IconButton}">
@@ -174,22 +170,16 @@
                                      Binding="{Binding DidFavorite}"
                                      Value="true">
                             <Setter Property="TextColor" Value="#F91880" />
-                            <Setter Property="Text" Value="&#xEB52;" />
                         </DataTrigger>
                     </Button.Triggers>
+                    <Button.ImageSource>
+                        <FontImageSource 
+                            Glyph="&#xEB51;"
+                            FontFamily="SegoeMDL2"
+                            Size="14"
+                            x:Name="FavoriteGlyph"/>
+                    </Button.ImageSource>
                 </Button>
-                <Label
-                    x:Name="FavoriteCount"
-                    Opacity="0.7"
-                    VerticalOptions="Center">
-                    <Label.Triggers>
-                        <DataTrigger TargetType="Label"
-                                     Binding="{Binding DidFavorite}"
-                                     Value="true">
-                            <Setter Property="TextColor" Value="#F91880" />
-                        </DataTrigger>
-                    </Label.Triggers>
-                </Label>
             </HorizontalStackLayout>
         </VerticalStackLayout>
 

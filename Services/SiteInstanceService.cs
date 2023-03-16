@@ -1,18 +1,18 @@
 ﻿using MastodonLib;
+using MastodonLib.Auth;
 
 namespace MastodonMaui.Services
 {
     internal class SiteInstanceService : ISiteInstance
     {
-        private readonly OAuthTokenService _authService;
-
+        public IAuthTokenStore TokenStore { get; }
         public MastodonClient Client { get; }
         public string InstanceUrl { get; }
 
         public SiteInstanceService(string instanceUrl)
         {
-            _authService = new OAuthTokenService(instanceUrl);
-            Client = new MastodonClient(_authService, instanceUrl);
+            TokenStore = new OAuthTokenService(instanceUrl);
+            Client = new(TokenStore, instanceUrl);
             InstanceUrl = instanceUrl;
         }
     }

@@ -41,10 +41,12 @@ namespace MastodonLib
             return await _api.GetStatusContext(status_id);
         }
 
-        public async Task<Status> PostStatus(string status, string replyToStatusId = null)
+        public async Task<Status> PostStatus(string status, 
+            string visibility = "public", string replyToStatusId = null)
         {
             var theBody = new Dictionary<string, object> {
-                { "status", status }
+                { "status", status },
+                { "visibility", visibility }
             };
 
             if (!string.IsNullOrEmpty(replyToStatusId))
@@ -55,11 +57,13 @@ namespace MastodonLib
             return await _api.PostStatus(theBody);
         }
 
-        public async Task<ScheduledStatus> PostScheduledStatus(string status, DateTime scheduledAt, string replyToStatusId = null)
+        public async Task<ScheduledStatus> PostScheduledStatus(string status, DateTime scheduledAt,
+            string visibility = "public", string replyToStatusId = null)
         {
             var theBody = new Dictionary<string, object> {
                 { "status", status },
-                { "scheduled_at", scheduledAt.ToString("o") }
+                { "scheduled_at", scheduledAt.ToString("o") },
+                { "visibility", visibility }
             };
 
             if (!string.IsNullOrEmpty(replyToStatusId))
@@ -96,6 +100,17 @@ namespace MastodonLib
             {
                 await _api.UndoReblogStatus(id);
             }
+        }
+
+        /// <summary>
+        /// Tags that are being used more frequently within the past week
+        /// </summary>
+        /// <param name="limit"></param>
+        /// <param name="offset"></param>
+        /// <returns></returns>
+        public async Task<List<Tag>> GetTrendingTags(int limit = 5, int offset = 0)
+        {
+            return await _api.GetTrendingTags(limit, offset);
         }
     }
 }

@@ -5,15 +5,8 @@ using System.Reactive;
 
 namespace MastodonMaui.ViewModels
 {
-    internal class BootstrapCompleteEventArgs : EventArgs
-    {
-        internal Account Account { get; set; }
-        internal SiteInstanceService SiteInstance { get; set; }
-    }
-
     public class BootstrapViewModel : ReactiveObject
     {
-        internal event EventHandler<BootstrapCompleteEventArgs> OnBootstrapComplete;
         private const string SITE_INSTANCE_URL_KEY = "login_instance_url";
 
         private string _siteInstanceUrl;
@@ -57,6 +50,8 @@ namespace MastodonMaui.ViewModels
 
             try
             {
+                var timeline = await siteInstance.Client.GetPublicTimeline();
+
                 await CompleteBootstrap(siteInstance);
             }
             catch (Exception ex)
@@ -85,15 +80,11 @@ namespace MastodonMaui.ViewModels
         private async Task CompleteBootstrap(SiteInstanceService siteInstance)
         {
             Account currentUser = await siteInstance.Client.GetCurrentUser();
-            if (currentUser != null && OnBootstrapComplete != null)
+            if (currentUser != null)
             {
                 await SecureStorage.Default.SetAsync(SITE_INSTANCE_URL_KEY, siteInstance.InstanceUrl);
 
-                OnBootstrapComplete.Invoke(this, new BootstrapCompleteEventArgs()
-                {
-                    Account = currentUser,
-                    SiteInstance = siteInstance
-                });
+                App.Current.MainPage = new AppShell(siteInstance, currentUser);
             }
         }
     }

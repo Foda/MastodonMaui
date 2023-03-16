@@ -1,6 +1,7 @@
 ﻿using MastodonLib.Models;
 using MastodonMaui.Services;
 using ReactiveUI;
+using Splat;
 using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -26,9 +27,9 @@ namespace MastodonMaui.ViewModels
             set => this.RaiseAndSetIfChanged(ref _selectedStatus, value);
         }
 
-        internal TimelineViewModel(ISiteInstance siteInstance)
+        internal TimelineViewModel(ISiteInstance siteInstance = null)
         {
-            _siteInstance = siteInstance;
+            _siteInstance = siteInstance ?? Locator.Current.GetService<ISiteInstance>();
 
             Items = new ObservableCollection<StatusViewModel>();
 
@@ -47,8 +48,7 @@ namespace MastodonMaui.ViewModels
         {
             Dictionary<string, object> navigationParameter = new()
             {
-                { Navigation.StatusPageVmQuery, theStatus },
-                { Navigation.SiteInstanceVmQuery, _siteInstance }
+                { Navigation.StatusPageVmQuery, theStatus }
             };
 
             await Shell.Current.GoToAsync(

@@ -28,10 +28,10 @@ public partial class BootstrapPage : ReactiveContentPage<BootstrapViewModel>
                 .DisposeWith(disposable);
 
             // Hide login controls if we're checking for the existing login
-            this.OneWayBind(ViewModel, vm => vm.IsCheckingForExistingLogin, v => v.SiteInstance.IsVisible, val => !val)
-                .DisposeWith(disposable);
-            this.OneWayBind(ViewModel, vm => vm.IsCheckingForExistingLogin, v => v.LoginButton.IsVisible, val => !val)
-                .DisposeWith(disposable);
+            //this.OneWayBind(ViewModel, vm => vm.IsCheckingForExistingLogin, v => v.SiteInstance.IsVisible, val => !val)
+            //    .DisposeWith(disposable);
+            //this.OneWayBind(ViewModel, vm => vm.IsCheckingForExistingLogin, v => v.LoginButton.IsVisible, val => !val)
+            //    .DisposeWith(disposable);
         });
 
         this.Loaded += BootstrapPage_Loaded;

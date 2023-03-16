@@ -1,6 +1,7 @@
 ﻿using MastodonLib.Models;
 using MastodonMaui.Services;
 using ReactiveUI;
+using Splat;
 using System.Collections.ObjectModel;
 using System.Reactive;
 
@@ -65,7 +66,7 @@ namespace MastodonMaui.ViewModels
         internal StatusViewModel(Status model, ISiteInstance siteInstance)
         {
             _model = model;
-            _siteInstance = siteInstance;
+            _siteInstance = siteInstance ?? Locator.Current.GetService<ISiteInstance>();
             Replies = new ObservableCollection<StatusViewModel>();
 
             DidFavorite = IsReblog ? _model.Reblog.Favourited : _model.Favourited;

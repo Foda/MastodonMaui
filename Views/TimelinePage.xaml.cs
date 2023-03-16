@@ -14,9 +14,11 @@ public partial class TimelinePage : ReactiveContentPage<TimelineViewModel>
         InitializeComponent();
     }
 
-    internal void SetInstance(SiteInstanceService siteInstanceService)
+    internal void Init(ISiteInstance siteInstance)
     {
-        this.ViewModel = new TimelineViewModel(siteInstanceService);
+        this.ViewModel = new(siteInstance);
+        this.TrendingView.ViewModel = new(siteInstance);
+        this.NewPostView.ViewModel = new(null, siteInstance);
 
         this.WhenActivated(disposable =>
         {
@@ -40,10 +42,5 @@ public partial class TimelinePage : ReactiveContentPage<TimelineViewModel>
     {
         this.Loaded -= TimelinePage_Loaded;
         await ViewModel.RefreshTimeline.Execute();
-    }
-
-    private async void StatusItems_RemainingItemsThresholdReached(object sender, EventArgs e)
-    {
-        await ViewModel.LoadMoreTimelineItems.Execute();
     }
 }

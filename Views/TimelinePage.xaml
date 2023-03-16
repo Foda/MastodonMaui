@@ -21,31 +21,39 @@
             Grid.Column="0"
             SelectionMode="Single"
             HorizontalOptions="Fill"
-            RemainingItemsThreshold="4"
-            RemainingItemsThresholdReached="StatusItems_RemainingItemsThresholdReached">
+            RemainingItemsThreshold="1"
+            RemainingItemsThresholdReachedCommand="{Binding LoadMoreTimelineItems}">
             <CollectionView.Header>
                 <Border
-                    Background="#09FFFFFF"
-                    StrokeThickness="0"
-                    Padding="12,8,12,8">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="8" />
-                    </Border.StrokeShape>
-                    <Grid>
-                        <Label
-                            Text="Home"
-                            FontAttributes="Bold"
-                            FontSize="24"
-                            VerticalOptions="Center"
-                            HorizontalOptions="Start"/>
+                    Style="{StaticResource SectionCardBorder}">
+                    <Border.Shadow>
+                        <Shadow 
+                            Radius="4"
+                            Offset="0,2"
+                            Opacity="0.13"
+                            Brush="Black"/>
+                    </Border.Shadow>
+                    <VerticalStackLayout>
+                        <Grid>
+                            <Label
+                                Text="Home"
+                                FontAttributes="Bold"
+                                FontSize="24"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Start"/>
 
-                        <Button
-                            x:Name="RefreshButton"
-                            Text="&#xE149;"
-                            VerticalOptions="Center"
-                            HorizontalOptions="End"
-                            Style="{StaticResource IconButton}"/>
-                    </Grid>
+                            <Button
+                                x:Name="RefreshButton"
+                                Text="&#xE149;"
+                                VerticalOptions="Center"
+                                HorizontalOptions="End"
+                                Style="{StaticResource IconButton}"/>
+                        </Grid>
+                        <views:ReplyView
+                            x:Name="NewPostView"
+                            IsReplyToStatus="False"
+                            />
+                    </VerticalStackLayout>
                 </Border>
             </CollectionView.Header>
             <CollectionView.ItemsLayout>
@@ -58,11 +66,18 @@
                     <Border
                         Padding="8"
                         StrokeThickness="0.5"
-                        Stroke="#1C1C1C"
-                        Background="#09FFFFFF">
+                        Stroke="{StaticResource CardStrokeSolid}"
+                        Background="{StaticResource CardBackgroundSolid}">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="4" />
                         </Border.StrokeShape>
+                        <Border.Shadow>
+                            <Shadow 
+                                Radius="4"
+                                Offset="0,2"
+                                Opacity="0.13"
+                                Brush="Black"/>
+                        </Border.Shadow>
                         <views:StatusView
                             Margin="0,0,16,0"/>
                     </Border>
