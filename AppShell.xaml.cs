@@ -1,26 +1,17 @@
-﻿using MastodonLib.Models;
-using MastodonMaui.Services;
-using MastodonMaui.ViewModels;
-using MastodonMaui.Views;
-using Splat;
+﻿using MastodonMaui.Views;
 
 namespace MastodonMaui;
 
 public partial class AppShell : Shell
 {
-    internal AppShell(SiteInstanceService siteInstanceService, Account currentUser)
+    internal AppShell()
     {
         InitializeComponent();
 
-        Locator.CurrentMutable.RegisterConstant(
-            siteInstanceService, typeof(ISiteInstance));
+        BootstrapPage.ViewModel = new ViewModels.BootstrapViewModel();
 
-        CurrentUser.ViewModel = new CurrentUserViewModel(currentUser, siteInstanceService);
-        Locator.CurrentMutable.RegisterConstant(
-            CurrentUser.ViewModel, typeof(ICurrentUserService));
-
+        Routing.RegisterRoute(MastodonMaui.Navigation.BootstrapPageRoute, typeof(BootstrapPage));
         Routing.RegisterRoute(MastodonMaui.Navigation.StatusPageRoute, typeof(StatusPage));
-
-        TimelinePage.Init(siteInstanceService);
+        Routing.RegisterRoute(MastodonMaui.Navigation.HomePageRoute, typeof(HomePage));
     }
 }

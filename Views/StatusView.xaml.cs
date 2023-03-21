@@ -24,6 +24,7 @@ public partial class StatusView : ReactiveContentView<StatusViewModel>
         if (view != null)
         {
             view.StatusActionBar.IsVisible = !(bool)newValue;
+            view.ImageMediaAttachments.IsVisible = !(bool)newValue;
         }
     }
 
@@ -53,6 +54,13 @@ public partial class StatusView : ReactiveContentView<StatusViewModel>
             this.OneWayBind(ViewModel, vm => vm.ReblogHint, v => v.ReblogDisplayName.Text)
                 .DisposeWith(disposable);
             this.OneWayBind(ViewModel, vm => vm.IsReblog, v => v.ReblogRow.Height, isReblog => isReblog ? 32 : 0)
+                .DisposeWith(disposable);
+
+            // Card
+            this.OneWayBind(ViewModel, vm => vm.HasCard, v => v.CardPresenter.Content,
+                _ => new CardView() { BindingContext = ViewModel.Card })
+                .DisposeWith(disposable);
+            this.OneWayBind(ViewModel, vm => vm.HasCard, v => v.CardPresenter.IsVisible)
                 .DisposeWith(disposable);
 
             // Status counters
@@ -116,8 +124,8 @@ public partial class StatusView : ReactiveContentView<StatusViewModel>
         popup.Content = new ReplyView()
         {
             ViewModel = replyVM,
-            WidthRequest = 500,
-            HeightRequest = 450
+            WidthRequest = 600,
+            HeightRequest = 220 + this.Height
         };
         App.Current.MainPage.ShowPopup(popup);
     }

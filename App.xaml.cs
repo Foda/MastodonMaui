@@ -9,10 +9,6 @@ public partial class App : Application
 	{
 		InitializeComponent();
 
-        MainPage = new NavigationPage(
-            new BootstrapPage()
-            {
-                ViewModel = new BootstrapViewModel()
-            });
+        MainPage = new AppShell();
     }
 }

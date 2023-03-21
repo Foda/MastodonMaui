@@ -28,20 +28,22 @@ public partial class BootstrapPage : ReactiveContentPage<BootstrapViewModel>
                 .DisposeWith(disposable);
 
             // Hide login controls if we're checking for the existing login
-            //this.OneWayBind(ViewModel, vm => vm.IsCheckingForExistingLogin, v => v.SiteInstance.IsVisible, val => !val)
-            //    .DisposeWith(disposable);
-            //this.OneWayBind(ViewModel, vm => vm.IsCheckingForExistingLogin, v => v.LoginButton.IsVisible, val => !val)
-            //    .DisposeWith(disposable);
+            this.OneWayBind(ViewModel, vm => vm.IsCheckingForExistingLogin, v => v.SiteInstance.IsVisible, val => !val)
+                .DisposeWith(disposable);
+            this.OneWayBind(ViewModel, vm => vm.IsCheckingForExistingLogin, v => v.LoginButton.IsVisible, val => !val)
+                .DisposeWith(disposable);
         });
-
-        this.Loaded += BootstrapPage_Loaded;
     }
 
-    private async void BootstrapPage_Loaded(object sender, EventArgs e)
+    protected override async void OnNavigatedTo(NavigatedToEventArgs args)
     {
-        this.Loaded -= BootstrapPage_Loaded;
+        base.OnNavigatedTo(args);
 
         // Attempt to auto-login
-        await ViewModel.LoginExisting.Execute();
+        bool didLogin = await ViewModel.LoginExisting.Execute();
+        if (didLogin)
+        {
+            await Shell.Current.GoToAsync(MastodonMaui.Navigation.HomePageRoute);
+        }
     }
 }

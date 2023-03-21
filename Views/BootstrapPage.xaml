@@ -16,12 +16,14 @@
             x:Name="LoginImage"
             Source="toots.png"
             WidthRequest="210"
+            HeightRequest="210"
             Aspect="AspectFit"
             HorizontalOptions="Center"/>
 
         <Entry
             x:Name="SiteInstance"
             Text="https://mastodon.gamedev.place"
+            Placeholder="Instance URL"
             MaximumWidthRequest="400"/>
 
         <Button

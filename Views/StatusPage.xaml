@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<rxMaui:ReactiveContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<rxMaui:ReactiveContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MastodonMaui.Views.StatusPage"
              xmlns:rxMaui="clr-namespace:ReactiveUI.Maui;assembly=ReactiveUI.Maui"
              xmlns:views="clr-namespace:MastodonMaui.Views"
              xmlns:viewModels="clr-namespace:MastodonMaui.ViewModels"
              x:TypeArguments="viewModels:StatusPageViewModel"
-             Title="StatusPage"
              Background="Transparent">
-    <Shell.BackButtonBehavior>
-        <BackButtonBehavior 
-            IsEnabled="False"
-            IsVisible="False"/>
-    </Shell.BackButtonBehavior>
     <Grid
         Margin="24,8,8,0">
         <Grid.ColumnDefinitions>
@@ -77,4 +71,4 @@
             HeightRequest="48"
             />
     </Grid>
-</rxMaui:ReactiveContentPage>
+</rxMaui:ReactiveContentView>

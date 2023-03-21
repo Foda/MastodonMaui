@@ -69,5 +69,7 @@ namespace MastodonLib.Models
 
         [JsonPropertyName("media_attachments")]
         public List<MediaAttachment> MediaAttachments { get; set; }
+
+        public Card Card { get; set; }
     }
 }

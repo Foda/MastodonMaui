@@ -5,7 +5,7 @@ using System.Reactive.Disposables;
 
 namespace MastodonMaui.Views;
 
-public partial class StatusPage : ReactiveContentPage<StatusPageViewModel>
+public partial class StatusPage : ReactiveContentView<StatusPageViewModel>
 {
 	public StatusPage()
 	{

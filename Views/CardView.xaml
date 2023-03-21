@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MastodonMaui.Views.CardView">
+    <Border
+        HeightRequest="100"
+        StrokeThickness="0.5"
+        Background="Transparent"
+        Stroke="{StaticResource CardStrokeSolid}">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="8" />
+        </Border.StrokeShape>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="96"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image
+                x:Name="CardImage"
+                Grid.Column="0"
+                Source="{Binding Image}"
+                Aspect="AspectFill"/>
+
+            <VerticalStackLayout
+                Grid.Column="1"
+                VerticalOptions="Center"
+                Margin="8"
+                Spacing="4">
+                <Label
+                    x:Name="Title"
+                    FontAttributes="Bold"
+                    Text="{Binding Title}"
+                    Opacity="0.9"/>
+                <Label
+                    x:Name="Description"
+                    Text="{Binding Description}"
+                    HorizontalTextAlignment="Start"
+                    LineBreakMode="TailTruncation"
+                    Opacity="0.8"/>
+                <Label
+                    x:Name="Url"
+                    Text="{Binding Url}"
+                    FontSize="Caption"
+                    Opacity="0.6"
+                    />
+            </VerticalStackLayout>
+        </Grid>
+    </Border>
+</ContentView>

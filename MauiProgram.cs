@@ -22,6 +22,7 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 fonts.AddFont("Segoe MDL2 Assets.ttf", "SegoeMDL2");
+                fonts.AddFont("SF-Pro.ttf", "SF-Pro");
             })
 #if WINDOWS
                  .ConfigureLifecycleEvents(events =>

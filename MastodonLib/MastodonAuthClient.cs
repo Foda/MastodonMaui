@@ -26,6 +26,7 @@ namespace MastodonLib
             }
             catch (Exception ex)
             {
+                System.Console.WriteLine(ex);
                 return null;
             }
         }

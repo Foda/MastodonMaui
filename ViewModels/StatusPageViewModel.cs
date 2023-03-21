@@ -8,7 +8,7 @@ using System.Reactive.Linq;
 
 namespace MastodonMaui.ViewModels
 {
-    public class StatusPageViewModel : ReactiveObject, IQueryAttributable
+    public class StatusPageViewModel : ReactiveObject
     {
         internal ISiteInstance SiteInstance { get; private set; }
 
@@ -16,7 +16,7 @@ namespace MastodonMaui.ViewModels
         public StatusViewModel ParentStatus
         {
             get => _parentStatus;
-            private set => this.RaiseAndSetIfChanged(ref _parentStatus, value);
+            set => this.RaiseAndSetIfChanged(ref _parentStatus, value);
         }
 
         private ObservableCollection<StatusViewModel> _replies = new();
@@ -46,15 +46,7 @@ namespace MastodonMaui.ViewModels
                 .InvokeCommand(FetchStatusContext);
         }
 
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
-        {
-            ParentStatus = (StatusViewModel)query[Navigation.StatusPageVmQuery];
-        }
-
-        private async Task NavigateBack_Impl()
-        {
-            await Shell.Current.GoToAsync(new ShellNavigationState(".."), true);
-        }
+        private async Task NavigateBack_Impl() { }
 
         private async Task FetchStatusContext_Impl()
         {

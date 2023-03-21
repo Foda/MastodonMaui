@@ -57,13 +57,16 @@ namespace MastodonMaui.ViewModels
             private set => this.RaiseAndSetIfChanged(ref _didReblog, value);
         }
 
+        public Card Card => IsReblog ? _model.Reblog.Card : _model.Card;
+        public bool HasCard => Card != null;
+
         public ObservableCollection<StatusViewModel> Replies { get; }
         public ObservableCollection<MediaAttachment> ImageMediaAttachments { get; }
 
         public ReactiveCommand<Unit, Unit> ToggleFavorited { get; }
         public ReactiveCommand<Unit, Unit> ToggleReblogged { get; }
 
-        internal StatusViewModel(Status model, ISiteInstance siteInstance)
+        internal StatusViewModel(Status model, ISiteInstance siteInstance = null)
         {
             _model = model;
             _siteInstance = siteInstance ?? Locator.Current.GetService<ISiteInstance>();
@@ -79,14 +82,14 @@ namespace MastodonMaui.ViewModels
 
             if (IsReblog)
             {
-                foreach (var item in _model.Reblog.MediaAttachments.Where(x => x.Type == "image"))
+                foreach (var item in _model.Reblog.MediaAttachments.Where(x => x.Type == "image" || x.Type == "gif"))
                 {
                     ImageMediaAttachments.Add(item);
                 }
             }
             else
             {
-                foreach (var item in _model.MediaAttachments.Where(x => x.Type == "image"))
+                foreach (var item in _model.MediaAttachments.Where(x => x.Type == "image" || x.Type == "gif"))
                 {
                     ImageMediaAttachments.Add(item);
                 }

@@ -4,32 +4,40 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:MastodonMaui.Views"
-    Shell.FlyoutBehavior="{OnIdiom Phone=Disabled, Default=Locked}"
+    Shell.FlyoutBehavior="Disabled"
     Shell.BackgroundColor="Transparent"
     Shell.NavBarIsVisible="False"
     FlyoutBackgroundColor="Transparent"
     BackgroundColor="Transparent">
-    
-    <FlyoutItem
-        Title="Home"
-        Icon="home_color.png">
-        <ShellContent>
-            <views:TimelinePage
-                x:Name="TimelinePage"/>
-        </ShellContent>
-    </FlyoutItem>
 
-    <FlyoutItem 
-        Title="Notifications"
-        Icon="notifications_color.png">
-        <ShellContent>
-            <views:NotificationsPage
-                x:Name="NotificationsPage"/>
-        </ShellContent>
-    </FlyoutItem>
+    <ShellContent
+        Title="Login"
+        Route="login">
+        <views:BootstrapPage
+            x:Name="BootstrapPage"/>
+    </ShellContent>
 
-    <Shell.FlyoutFooter>
-        <views:CurrentUserView
-            x:Name="CurrentUser"/>
-    </Shell.FlyoutFooter>
+    <TabBar>
+        <Tab
+            Title="Home"
+            Icon="home_color.png">
+            <ShellContent
+                Title="Home"
+                Icon="home_color.png">
+                <views:HomePage
+                    x:Name="HomePage"/>
+            </ShellContent>
+        </Tab>
+
+        <Tab
+            Title="Notifications"
+            Icon="notifications_color.png">
+            <ShellContent
+                Title="Notifications"
+                Icon="notifications_color.png">
+                <views:NotificationsPage
+                    x:Name="NotificationsPage"/>
+            </ShellContent>
+        </Tab>
+    </TabBar>
 </Shell>

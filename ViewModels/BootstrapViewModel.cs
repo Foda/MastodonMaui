@@ -1,6 +1,7 @@
 ﻿using MastodonLib.Models;
 using MastodonMaui.Services;
 using ReactiveUI;
+using Splat;
 using System.Reactive;
 
 namespace MastodonMaui.ViewModels
@@ -17,7 +18,7 @@ namespace MastodonMaui.ViewModels
         }
 
         public ReactiveCommand<Unit, Unit> Login { get; }
-        public ReactiveCommand<Unit, Unit> LoginExisting { get; }
+        public ReactiveCommand<Unit, bool> LoginExisting { get; }
 
         private bool _isAttemptingNewLogin;
         public bool IsAttemptingNewLogin
@@ -47,11 +48,8 @@ namespace MastodonMaui.ViewModels
         private async Task AttemptLogin()
         {
             SiteInstanceService siteInstance = new(SiteInstanceUrl);
-
             try
             {
-                var timeline = await siteInstance.Client.GetPublicTimeline();
-
                 await CompleteBootstrap(siteInstance);
             }
             catch (Exception ex)
@@ -60,7 +58,7 @@ namespace MastodonMaui.ViewModels
             }
         }
 
-        private async Task AttemptLoginForExistingUser()
+        private async Task<bool> AttemptLoginForExistingUser()
         {
             try
             {
@@ -68,24 +66,30 @@ namespace MastodonMaui.ViewModels
                 if (!string.IsNullOrEmpty(existingSite))
                 {
                     SiteInstanceService siteInstance = new(existingSite);
-                    await CompleteBootstrap(siteInstance);
+                    return await CompleteBootstrap(siteInstance);
                 }
             }
             catch (Exception ex)
             {
 
             }
+            return false;
         }
 
-        private async Task CompleteBootstrap(SiteInstanceService siteInstance)
+        private async Task<bool> CompleteBootstrap(SiteInstanceService siteInstance)
         {
             Account currentUser = await siteInstance.Client.GetCurrentUser();
             if (currentUser != null)
             {
                 await SecureStorage.Default.SetAsync(SITE_INSTANCE_URL_KEY, siteInstance.InstanceUrl);
 
-                App.Current.MainPage = new AppShell(siteInstance, currentUser);
+                Locator.CurrentMutable.RegisterConstant(siteInstance, typeof(ISiteInstance));
+                Locator.CurrentMutable.RegisterConstant(
+                    new CurrentUserViewModel(currentUser, siteInstance), typeof(ICurrentUserService));
+
+                return true;
             }
+            return false;
         }
     }
 }

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rxMaui:ReactiveContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:rxMaui="clr-namespace:ReactiveUI.Maui;assembly=ReactiveUI.Maui"
+             xmlns:views="clr-namespace:MastodonMaui.Views"
+             xmlns:viewModels="clr-namespace:MastodonMaui.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="MastodonMaui.Views.HomePage"
+             x:TypeArguments="viewModels:HomePageViewModel"
+             Title="HomePage"
+             Background="Transparent">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False"/>
+    </Shell.BackButtonBehavior>
+    <Grid
+        Margin="24,8,8,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" x:Name="NavSidebarColumn"/>
+            <ColumnDefinition Width="600" x:Name="TimelineColumn"/>
+            <ColumnDefinition Width="16"/>
+            <ColumnDefinition Width="*" x:Name="AuxColumn"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid
+            Grid.Column="0"
+            HorizontalOptions="Fill">
+            <views:CurrentUserView
+                x:Name="CurrentUserView"
+                VerticalOptions="End"/>
+        </Grid>
+
+        <HorizontalStackLayout
+            Grid.Column="1"
+            x:Name="TimelineContainer">
+            <toolkit:StateContainer.StateViews>
+                <CollectionView
+                    x:Name="StatusItems"
+                    SelectionMode="Single"
+                    RemainingItemsThresholdReachedCommand="{Binding LoadMoreTimelineItems}"
+                    toolkit:StateView.StateKey="timeline"
+                    WidthRequest="600">
+                    <CollectionView.Header>
+                        <Border
+                            MaximumWidthRequest="580"
+                            Style="{StaticResource SectionCardBorder}">
+                            <Border.Shadow>
+                                <Shadow 
+                                    Radius="4"
+                                    Offset="0,2"
+                                    Opacity="0.13"
+                                    Brush="Black"/>
+                            </Border.Shadow>
+                            <VerticalStackLayout>
+                                <Grid>
+                                    <Label
+                                        Text="Home"
+                                        FontAttributes="Bold"
+                                        FontSize="24"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="Start"/>
+
+                                    <Button
+                                        x:Name="RefreshButton"
+                                        Text="&#xE149;"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="End"
+                                        Style="{StaticResource IconButton}"/>
+                                </Grid>
+                                <views:ReplyView
+                                    x:Name="NewPostView"
+                                    IsReplyToStatus="False"
+                                    />
+                            </VerticalStackLayout>
+                        </Border>
+                    </CollectionView.Header>
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout 
+                            Orientation="Vertical"
+                            ItemSpacing="8"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                Padding="8"
+                                StrokeThickness="0.5"
+                                Stroke="{StaticResource CardStrokeSolid}"
+                                Background="{StaticResource CardBackgroundSolid}"
+                                MaximumWidthRequest="580"
+                                HorizontalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="4" />
+                                </Border.StrokeShape>
+                                <Border.Shadow>
+                                    <Shadow 
+                                        Radius="4"
+                                        Offset="0,2"
+                                        Opacity="0.13"
+                                        Brush="Black"/>
+                                </Border.Shadow>
+                                <views:StatusView
+                                    Margin="0,0,16,0"/>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <views:StatusPage
+                    x:Name="CurrentStatus"
+                    toolkit:StateView.StateKey="view_status"/>
+            </toolkit:StateContainer.StateViews>
+        </HorizontalStackLayout>
+
+        <ActivityIndicator
+            x:Name="TimelineLoading"
+            Grid.Column="1"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            WidthRequest="48"
+            HeightRequest="48"
+            />
+
+        <VerticalStackLayout
+            Grid.Column="3"
+            Spacing="16"
+            x:Name="Sidebar"
+            MaximumWidthRequest="350">
+            <VerticalStackLayout.Style>
+                <Style TargetType="VerticalStackLayout">
+                    <Setter Property="VisualStateManager.VisualStateGroups">
+                        <VisualStateGroupList>
+                            <VisualStateGroup>
+                                <VisualState x:Name="HideSidebar">
+                                    <VisualState.StateTriggers>
+                                        <AdaptiveTrigger MinWindowWidth="0" />
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Property="IsVisible" Value="False" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="ShowSidebar">
+                                    <VisualState.StateTriggers>
+                                        <AdaptiveTrigger MinWindowWidth="1200" />
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Property="IsVisible" Value="True" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </Setter>
+                </Style>
+            </VerticalStackLayout.Style>
+            <SearchBar
+                x:Name="Search"
+                Placeholder="Search"/>
+
+            <views:TrendingView
+                HorizontalOptions="FillAndExpand"
+                x:Name="TrendingView"/>
+        </VerticalStackLayout>
+    </Grid>
+</rxMaui:ReactiveContentPage>

@@ -1,6 +1,5 @@
 ﻿using MastodonLib.Models;
 using MastodonMaui.Services;
-using MastodonMaui.Views;
 using ReactiveUI;
 using Splat;
 using System.Reactive;
@@ -19,19 +18,14 @@ namespace MastodonMaui.ViewModels
         {
             _siteInstance = siteInstance ?? Locator.Current.GetService<ISiteInstance>();
             Account = account;
-
-            Logout = ReactiveCommand.Create(Logout_Impl);
+            Logout = ReactiveCommand.CreateFromTask(Logout_Impl);
         }
 
-        private void Logout_Impl()
+        private async Task Logout_Impl()
         {
             _siteInstance.TokenStore.ClearToken();
 
-            App.Current.MainPage = new NavigationPage(
-                new BootstrapPage()
-                {
-                    ViewModel = new BootstrapViewModel()
-                });
+            await Shell.Current.GoToAsync(Navigation.BootstrapPageRoute);
         }
     }
 }
