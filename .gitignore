@@ -1,4 +1,6 @@
-.vs/
-bin/
 MastodonLib/obj/
+MastodonMaui.Test/bin/
+MastodonMaui.Test/obj/
 obj/
+MastodonLib/bin/
+.vs/

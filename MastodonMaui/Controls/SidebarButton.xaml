@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MastodonMaui.Controls.SidebarButton">
+    <Border
+        x:Name="BasePlate"
+        Padding="8"
+        MinimumHeightRequest="40"
+        Background="Transparent"
+        StrokeThickness="0"
+        StrokeShape="RoundRectangle 8">
+        <Border.GestureRecognizers>
+            <PointerGestureRecognizer
+                PointerEntered="PointerGestureRecognizer_PointerEntered"
+                PointerExited="PointerGestureRecognizer_PointerExited"
+                />
+        </Border.GestureRecognizers>
+        <HorizontalStackLayout
+            Spacing="8">
+            <Image
+                x:Name="Icon"
+                VerticalOptions="Center"
+                WidthRequest="26"
+                HeightRequest="26"/>
+
+            <Label
+                x:Name="TextLabel"
+                VerticalOptions="Center"
+                TextColor="{StaticResource Gray200}"
+                FontSize="14">
+                <Label.Style>
+                    <Style TargetType="Label">
+                        <Setter Property="VisualStateManager.VisualStateGroups">
+                            <VisualStateGroupList>
+                                <VisualStateGroup>
+                                    <VisualState x:Name="HideSidebar">
+                                        <VisualState.StateTriggers>
+                                            <AdaptiveTrigger MinWindowWidth="0" />
+                                        </VisualState.StateTriggers>
+                                        <VisualState.Setters>
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="ShowSidebar">
+                                        <VisualState.StateTriggers>
+                                            <AdaptiveTrigger MinWindowWidth="1200" />
+                                        </VisualState.StateTriggers>
+                                        <VisualState.Setters>
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateGroupList>
+                        </Setter>
+                    </Style>
+                </Label.Style>
+            </Label>
+        </HorizontalStackLayout>
+    </Border>
+</ContentView>

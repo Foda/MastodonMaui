@@ -23,6 +23,7 @@
 	</ItemGroup>
 
 	<ItemGroup> 
-	  <InternalsVisibleTo Include="MastodonMaui" /> 
+	  <InternalsVisibleTo Include="MastodonMaui" />
+	  <InternalsVisibleTo Include="MastodonMaui.Test" />
 	</ItemGroup>
 </Project>

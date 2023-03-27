@@ -4,6 +4,7 @@
              xmlns:rxMaui="clr-namespace:ReactiveUI.Maui;assembly=ReactiveUI.Maui"
              xmlns:views="clr-namespace:MastodonMaui.Views"
              xmlns:viewModels="clr-namespace:MastodonMaui.ViewModels"
+             xmlns:controls="clr-namespace:MastodonMaui.Controls"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="MastodonMaui.Views.HomePage"
              x:TypeArguments="viewModels:HomePageViewModel"
@@ -13,17 +14,21 @@
         <BackButtonBehavior IsEnabled="False" IsVisible="False"/>
     </Shell.BackButtonBehavior>
     <Grid
+        ColumnDefinitions="*,600,16,*"
         Margin="24,8,8,0">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" x:Name="NavSidebarColumn"/>
-            <ColumnDefinition Width="600" x:Name="TimelineColumn"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="*" x:Name="AuxColumn"/>
-        </Grid.ColumnDefinitions>
-
         <Grid
             Grid.Column="0"
             HorizontalOptions="Fill">
+            <VerticalStackLayout
+                VerticalOptions="Start">
+                <controls:SidebarButton
+                    Source="home_color.png"
+                    Text="Home"/>
+                <controls:SidebarButton
+                    Source="notifications_color.png"
+                    Text="Notifications"/>
+            </VerticalStackLayout>
+            
             <views:CurrentUserView
                 x:Name="CurrentUserView"
                 VerticalOptions="End"/>
