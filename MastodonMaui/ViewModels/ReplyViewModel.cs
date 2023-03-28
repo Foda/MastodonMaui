@@ -46,6 +46,9 @@ namespace MastodonMaui.ViewModels
         readonly ObservableAsPropertyHelper<bool> _isSendingReply;
         public bool IsSendingReply => _isSendingReply.Value;
 
+        readonly ObservableAsPropertyHelper<bool> _canSendReply;
+        public bool CanSendReply => _canSendReply.Value;
+
         internal ICurrentUserService CurrentUser { get; }
 
         internal ReactiveCommand<Unit, Status> SendReply { get; }
@@ -77,6 +80,7 @@ namespace MastodonMaui.ViewModels
             SendReply = ReactiveCommand.CreateFromTask(SendReply_Impl, canSendPost);
             CancelReply = ReactiveCommand.Create(() => { });
 
+            _canSendReply = SendReply.CanExecute.ToProperty(this, nameof(CanSendReply));
             _isSendingReply = SendReply.IsExecuting.ToProperty(this, nameof(IsSendingReply));
             _remaingCharacters = this.WhenAnyValue(vm => vm.ReplyText)
                 .Select(text => CHARACTER_LIMIT - text.Length)

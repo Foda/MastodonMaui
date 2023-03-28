@@ -1,5 +1,8 @@
 ﻿using MastodonMaui.ViewModels;
 using MastodonMaui.Views;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 
 namespace MastodonMaui;
 

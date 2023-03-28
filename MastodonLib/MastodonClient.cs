@@ -2,10 +2,13 @@
 using MastodonLib.Models;
 using Refit;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 
 namespace MastodonLib
 {
-    internal class MastodonClient
+    internal class MastodonClient : IMastodonClient
     {
         private readonly IMastodonApi _api;
 
