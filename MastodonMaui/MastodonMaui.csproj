@@ -43,8 +43,8 @@
 		<MauiImage Include="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
 		<MauiImage Include="Resources\Images\home.svg" />
 		<MauiImage Include="Resources\Images\notification.svg" />
-		<MauiImage Include="Resources\Images\home_color.svg" BaseSize="24,24" />
-		<MauiImage Include="Resources\Images\notifications_color.svg" BaseSize="24,24" />
+		<MauiImage Include="Resources\Images\home_color.svg" BaseSize="40,40" />
+		<MauiImage Include="Resources\Images\notifications_color.svg" BaseSize="40,40" />
 		<MauiImage Include="Resources\Images\toots.png" />
 		<MauiImage Include="Resources\Images\back.svg" BaseSize="16,16" />
 		

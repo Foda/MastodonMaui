@@ -8,7 +8,8 @@
     Shell.BackgroundColor="Transparent"
     Shell.NavBarIsVisible="False"
     FlyoutBackgroundColor="Transparent"
-    BackgroundColor="Transparent">
+    BackgroundColor="Transparent"
+    Shell.TabBarIsVisible="{OnPlatform False, iOS=True, Android=True}">
 
     <ShellContent
         Title="Login"

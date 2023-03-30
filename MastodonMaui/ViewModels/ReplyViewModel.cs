@@ -91,12 +91,20 @@ namespace MastodonMaui.ViewModels
         {
             try
             {
+                Status newPost = null;
                 if (ReplyToStatus != null)
                 {
-                    Status newPost = await _siteInstance.Client.PostStatus(
+                    // Replying to a post
+                    newPost = await _siteInstance.Client.PostStatus(
                         ReplyText, Visibility, ReplyToStatus.Id);
-                    return newPost;
                 }
+                else
+                {
+                    // New timeline post
+                    newPost = await _siteInstance.Client.PostStatus(
+                        ReplyText, Visibility);
+                }
+                return newPost;
             }
             catch (Exception ex) 
             {

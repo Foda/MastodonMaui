@@ -20,9 +20,8 @@
         <VerticalStackLayout>
             <Label
                 Text="Trending"
-                FontAttributes="Bold"
-                FontSize="24"
-                HorizontalOptions="Start"/>
+                HorizontalOptions="Start"
+                Style="{StaticResource TitleLabel}"/>
        
             <VerticalStackLayout
                 x:Name="Trending"

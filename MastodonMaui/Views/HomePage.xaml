@@ -14,11 +14,17 @@
         <BackButtonBehavior IsEnabled="False" IsVisible="False"/>
     </Shell.BackButtonBehavior>
     <Grid
-        ColumnDefinitions="*,600,16,*"
         Margin="24,8,8,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{OnIdiom  *, Phone=0}"/>
+            <ColumnDefinition Width="{OnIdiom 600, Phone=*}"/>
+            <ColumnDefinition Width="{OnIdiom 16, Phone=0}"/>
+            <ColumnDefinition Width="{OnIdiom *, Phone=0}"/>
+        </Grid.ColumnDefinitions>
         <Grid
             Grid.Column="0"
-            HorizontalOptions="Fill">
+            HorizontalOptions="Fill"
+            IsVisible="{OnIdiom True, Phone=False}">
             <VerticalStackLayout
                 VerticalOptions="Start">
                 <controls:SidebarButton
@@ -38,29 +44,21 @@
             Grid.Column="1"
             x:Name="TimelineContainer">
             <toolkit:StateContainer.StateViews>
+                    <!--RemainingItemsThresholdReachedCommand="{Binding LoadMoreTimelineItems}"-->
                 <CollectionView
                     x:Name="StatusItems"
                     SelectionMode="Single"
-                    RemainingItemsThresholdReachedCommand="{Binding LoadMoreTimelineItems}"
                     toolkit:StateView.StateKey="timeline"
                     WidthRequest="600">
                     <CollectionView.Header>
                         <Border
                             MaximumWidthRequest="580"
                             Style="{StaticResource SectionCardBorder}">
-                            <Border.Shadow>
-                                <Shadow 
-                                    Radius="4"
-                                    Offset="0,2"
-                                    Opacity="0.13"
-                                    Brush="Black"/>
-                            </Border.Shadow>
                             <VerticalStackLayout>
                                 <Grid>
                                     <Label
                                         Text="Home"
-                                        FontAttributes="Bold"
-                                        FontSize="24"
+                                        Style="{StaticResource TitleLabel}"
                                         VerticalOptions="Center"
                                         HorizontalOptions="Start"/>
 
@@ -95,13 +93,6 @@
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="4" />
                                 </Border.StrokeShape>
-                                <Border.Shadow>
-                                    <Shadow 
-                                        Radius="4"
-                                        Offset="0,2"
-                                        Opacity="0.13"
-                                        Brush="Black"/>
-                                </Border.Shadow>
                                 <views:StatusView
                                     Margin="0,0,16,0"/>
                             </Border>

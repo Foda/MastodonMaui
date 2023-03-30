@@ -32,7 +32,7 @@
             x:Name="ReblogDisplayName"
             Grid.Column="2"
             Grid.Row="0"
-            FontSize="12"
+            Style="{StaticResource CaptionLabel}"
             Opacity="0.7"
             VerticalOptions="Center"/>
 
@@ -80,7 +80,7 @@
                 Spacing="4">
                 <Label
                     x:Name="DisplayName"
-                    FontAttributes="Bold"/>
+                    Style="{StaticResource BodyStrongLabel}"/>
                 <Label
                     x:Name="CreatedAt"
                     Opacity="0.5"/>
@@ -93,7 +93,8 @@
             
             <Label
                 x:Name="Content"
-                TextType="Html"/>
+                TextType="Html"
+                Style="{StaticResource BodyLabel}"/>
 
             <FlexLayout
                 x:Name="ImageMediaAttachments"
@@ -104,7 +105,7 @@
                     <DataTemplate>
                         <Border 
                             HeightRequest="300"
-                            WidthRequest="490"
+                            WidthRequest="400"
                             MaximumHeightRequest="520"
                             MaximumWidthRequest="450"
                             VerticalOptions="Center"
@@ -150,7 +151,7 @@
                     Style="{StaticResource IconButton}">
                     <Button.Triggers>
                         <DataTrigger TargetType="Button"
-                                     Binding="{Binding DidReblog}"
+                                     Binding="{Binding DidReblog, FallbackValue=false}"
                                      Value="true">
                             <Setter Property="TextColor" Value="#6CCB5F" />
                         </DataTrigger>
@@ -171,7 +172,7 @@
                     Style="{StaticResource IconButton}">
                     <Button.Triggers>
                         <DataTrigger TargetType="Button"
-                                     Binding="{Binding DidFavorite}"
+                                     Binding="{Binding DidFavorite, FallbackValue=false}"
                                      Value="true">
                             <Setter Property="TextColor" Value="#F91880" />
                         </DataTrigger>

@@ -29,7 +29,7 @@
                 Spacing="4">
                 <Label
                     x:Name="Title"
-                    FontAttributes="Bold"
+                    FontFamily="SegoeUIDisplaySemibold"
                     Text="{Binding Title}"
                     Opacity="0.9"/>
                 <Label
@@ -41,6 +41,7 @@
                 <Label
                     x:Name="Url"
                     Text="{Binding Url}"
+                    FontFamily="SegoeUIDisplaySmall"
                     FontSize="Caption"
                     Opacity="0.6"
                     />

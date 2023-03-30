@@ -34,6 +34,7 @@
         <ActivityIndicator
             x:Name="ActivitySpinner"
             HorizontalOptions="Center"
-            WidthRequest="48"/>
+            WidthRequest="48"
+            HeightRequest="48"/>
     </VerticalStackLayout>
 </rxMaui:ReactiveContentPage>

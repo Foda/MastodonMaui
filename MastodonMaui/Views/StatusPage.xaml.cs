@@ -7,9 +7,9 @@ namespace MastodonMaui.Views;
 
 public partial class StatusPage : ReactiveContentView<StatusPageViewModel>
 {
-	public StatusPage()
-	{
-		InitializeComponent();
+    public StatusPage()
+    {
+        InitializeComponent();
 
         this.ViewModel = new StatusPageViewModel();
         this.WhenActivated(disposable =>

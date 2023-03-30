@@ -35,8 +35,11 @@ namespace MastodonMaui.ViewModels
         internal StatusPageViewModel(ISiteInstance siteInstance = null)
         {
             SiteInstance = siteInstance ?? Locator.Current.GetService<ISiteInstance>();
-            NavigateBack = ReactiveCommand.CreateFromTask(NavigateBack_Impl);
-            FetchStatusContext = ReactiveCommand.CreateFromTask(FetchStatusContext_Impl);
+            FetchStatusContext = ReactiveCommand
+                .CreateFromObservable(() => 
+                    Observable.StartAsync(ct => FetchStatusContext_Impl(ct))
+                              .TakeUntil(this.NavigateBack));
+            NavigateBack = ReactiveCommand.Create(() => { });
 
             _isLoading = FetchStatusContext.IsExecuting.ToProperty(this, nameof(IsLoading));
 
@@ -46,10 +49,10 @@ namespace MastodonMaui.ViewModels
                 .InvokeCommand(FetchStatusContext);
         }
 
-        private async Task NavigateBack_Impl() { }
-
-        private async Task FetchStatusContext_Impl()
+        private async Task FetchStatusContext_Impl(CancellationToken ct)
         {
+            Replies.Clear();
+
             StatusContext statusContext = null;
             try
             {
@@ -60,6 +63,9 @@ namespace MastodonMaui.ViewModels
             {
                 // TODO
             }
+
+            if (ct.IsCancellationRequested)
+                return;
             
             if (statusContext != null)
             {

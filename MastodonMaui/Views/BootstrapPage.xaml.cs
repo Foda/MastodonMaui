@@ -20,11 +20,11 @@ public partial class BootstrapPage : ReactiveContentPage<BootstrapViewModel>
             this.Bind(ViewModel, vm => vm.SiteInstanceUrl, v => v.SiteInstance.Text)
                 .DisposeWith(disposable);
 
-            this.OneWayBind(ViewModel, vm => vm.IsAttemptingNewLogin, v => v.SiteInstance.IsEnabled, val => !val)
+            this.OneWayBind(ViewModel, vm => vm.IsAttemptingLogin, v => v.SiteInstance.IsEnabled, val => !val)
                 .DisposeWith(disposable);
-            this.OneWayBind(ViewModel, vm => vm.IsAttemptingNewLogin, v => v.LoginButton.IsEnabled, val => !val)
+            this.OneWayBind(ViewModel, vm => vm.IsAttemptingLogin, v => v.LoginButton.IsEnabled, val => !val)
                 .DisposeWith(disposable);
-            this.OneWayBind(ViewModel, vm => vm.IsAttemptingNewLogin, v => v.ActivitySpinner.IsRunning)
+            this.OneWayBind(ViewModel, vm => vm.IsAttemptingLogin, v => v.ActivitySpinner.IsRunning)
                 .DisposeWith(disposable);
 
             // Hide login controls if we're checking for the existing login
@@ -40,10 +40,6 @@ public partial class BootstrapPage : ReactiveContentPage<BootstrapViewModel>
         base.OnNavigatedTo(args);
 
         // Attempt to auto-login
-        bool didLogin = await ViewModel.LoginExisting.Execute();
-        if (didLogin)
-        {
-            await Shell.Current.GoToAsync(MastodonMaui.Navigation.HomePageRoute);
-        }
+        await ViewModel.LoginExisting.Execute();
     }
 }

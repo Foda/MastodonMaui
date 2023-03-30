@@ -3,6 +3,7 @@ using MastodonMaui.Services;
 using ReactiveUI;
 using Splat;
 using System.Reactive;
+using System.Reactive.Linq;
 
 namespace MastodonMaui.ViewModels
 {
@@ -20,29 +21,22 @@ namespace MastodonMaui.ViewModels
         public ReactiveCommand<Unit, Unit> Login { get; }
         public ReactiveCommand<Unit, bool> LoginExisting { get; }
 
-        private bool _isAttemptingNewLogin;
-        public bool IsAttemptingNewLogin
-        {
-            get => _isAttemptingNewLogin;
-            private set => this.RaiseAndSetIfChanged(ref _isAttemptingNewLogin, value);
-        }
+        private ObservableAsPropertyHelper<bool> _isAttemptingLogin;
+        public bool IsAttemptingLogin => _isAttemptingLogin.Value;
 
-        private bool _isCheckingForExistingLogin = true;
-        public bool IsCheckingForExistingLogin
-        {
-            get => _isCheckingForExistingLogin;
-            private set => this.RaiseAndSetIfChanged(ref _isCheckingForExistingLogin, value);
-        }
+        private ObservableAsPropertyHelper<bool> _isCheckingForExistingLogin;
+        public bool IsCheckingForExistingLogin => _isCheckingForExistingLogin.Value;
 
         internal BootstrapViewModel()
         {
             Login = ReactiveCommand.CreateFromTask(AttemptLogin);
-            Login.IsExecuting.ToProperty(
-                this, vm => vm.IsAttemptingNewLogin, false, RxApp.MainThreadScheduler);
-
             LoginExisting = ReactiveCommand.CreateFromTask(AttemptLoginForExistingUser);
-            LoginExisting.IsExecuting.ToProperty(
-                this, vm => vm.IsCheckingForExistingLogin, false, RxApp.MainThreadScheduler);
+
+            _isAttemptingLogin = Login.IsExecuting.Merge(LoginExisting.IsExecuting)
+                .ToProperty(this, vm => vm.IsAttemptingLogin, false, RxApp.MainThreadScheduler);
+
+            _isCheckingForExistingLogin = LoginExisting.IsExecuting
+                .ToProperty(this, vm => vm.IsCheckingForExistingLogin, false, RxApp.MainThreadScheduler);
         }
 
         private async Task AttemptLogin()
@@ -86,6 +80,8 @@ namespace MastodonMaui.ViewModels
                 Locator.CurrentMutable.RegisterConstant(siteInstance, typeof(ISiteInstance));
                 Locator.CurrentMutable.RegisterConstant(
                     new CurrentUserViewModel(currentUser, siteInstance), typeof(ICurrentUserService));
+
+                await Shell.Current.GoToAsync(MastodonMaui.Navigation.HomePageRoute);
 
                 return true;
             }

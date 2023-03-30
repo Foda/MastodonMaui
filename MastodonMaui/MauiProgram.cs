@@ -23,6 +23,13 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 fonts.AddFont("Segoe MDL2 Assets.ttf", "SegoeMDL2");
                 fonts.AddFont("SF-Pro.ttf", "SF-Pro");
+
+                fonts.AddFont("Segoe-UI-Variable-Static-Display.ttf", "SegoeUIDisplay");
+                fonts.AddFont("Segoe-UI-Variable-Static-Display-Bold.ttf", "SegoeUIDisplayBold");
+                fonts.AddFont("Segoe-UI-Variable-Static-Display-Semibold.ttf", "SegoeUIDisplaySemibold");
+                fonts.AddFont("Segoe-UI-Variable-Static-Display-Semilight.ttf", "SegoeUIDisplaySemilight");
+                fonts.AddFont("Segoe-UI-Variable-Static-Small.ttf", "SegoeUIDisplaySmall");
+
             })
 #if WINDOWS
                  .ConfigureLifecycleEvents(events =>
@@ -33,8 +40,8 @@ public static class MauiProgram
                          {
                              var manager = WinUIEx.WindowManager.Get(window);
                              manager.PersistenceId = "Masto_MainWindowPersistanceId";
-                             manager.MinWidth = 640;
-                             manager.MinHeight = 480;
+                             manager.MinWidth = 750;
+                             manager.MinHeight = 512;
                              manager.Backdrop = new MicaSystemBackdrop();
                          });
                      });

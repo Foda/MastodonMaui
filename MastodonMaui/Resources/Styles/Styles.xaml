@@ -198,7 +198,7 @@
                 <OnPlatform x:TypeArguments="x:String">
                     <On Platform="iOS" Value="SF-Pro" />
                     <On Platform="Android" Value="Roboto" />
-                    <On Platform="WinUI" Value="Segoe UI Variable Display" />
+                    <On Platform="WinUI" Value="SegoeUIDisplay" />
                 </OnPlatform>
             </Setter.Value>
         </Setter>

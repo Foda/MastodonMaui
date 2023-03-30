@@ -38,6 +38,9 @@ public partial class SidebarButton : ContentView
         }
     }
 
+    private static SolidColorBrush OnHoverBrush = new(Color.FromArgb("#383838"));
+    private static SolidColorBrush DefaultBrush = new(Colors.Transparent);
+
     public SidebarButton()
 	{
 		InitializeComponent();
@@ -45,11 +48,11 @@ public partial class SidebarButton : ContentView
 
     private void PointerGestureRecognizer_PointerEntered(object sender, PointerEventArgs e)
     {
-        BasePlate.BackgroundColor = Color.FromArgb("#383838");
+        BasePlate.Background = OnHoverBrush;
     }
 
     private void PointerGestureRecognizer_PointerExited(object sender, PointerEventArgs e)
     {
-        BasePlate.BackgroundColor = Colors.Transparent;
+        BasePlate.Background = DefaultBrush;
     }
 }

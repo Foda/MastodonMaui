@@ -13,11 +13,31 @@
 
             <SolidColorBrush x:Key="CardBackgroundSolid">#333333</SolidColorBrush>
             <SolidColorBrush x:Key="CardStrokeSolid">#171717</SolidColorBrush>
+            <SolidColorBrush x:Key="ReplyCardBackgroundSolid">#232323</SolidColorBrush>
+
+            <Style x:Key="TitleLabel" TargetType="Label">
+                <Setter Property="FontFamily" Value="SegoeUIDisplaySemibold" />
+                <Setter Property="FontSize" Value="28" />
+            </Style>
+
+            <Style x:Key="BodyLabel" TargetType="Label">
+                <Setter Property="FontFamily" Value="SegoeUIDisplay" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+
+            <Style x:Key="BodyStrongLabel" TargetType="Label">
+                <Setter Property="FontFamily" Value="SegoeUIDisplaySemibold" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+
+            <Style x:Key="CaptionLabel" TargetType="Label">
+                <Setter Property="FontFamily" Value="SegoeUIDisplaySmall" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
 
             <Style x:Key="SectionCardBorder" TargetType="Border">
                 <Setter Property="Padding" Value="12,8,12,8" />
                 <Setter Property="StrokeShape" Value="RoundRectangle 8"/>
-                <!-- #09FFFFFF-->
                 <Setter Property="BackgroundColor" Value="#333333"/>
                 <Setter Property="StrokeThickness" Value="0.5"/>
                 <Setter Property="Stroke" Value="{StaticResource CardStrokeSolid}"/>

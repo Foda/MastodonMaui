@@ -49,11 +49,14 @@ public partial class HomePage : ReactiveContentPage<HomePageViewModel>
             this.WhenAnyValue(v => v.ViewModel.CurrentState)
                 .Subscribe(async state =>
             {
-                await StateContainer.ChangeStateWithAnimation(TimelineContainer,
-                        state,
-                        (element, token) => element.TranslateTo(-200, 0, 150, Easing.CubicIn).WaitAsync(token),
-                        (element, token) => element.TranslateTo(0, 0, 350, Easing.CubicOut).WaitAsync(token),
-                        CancellationToken.None);
+                if (StateContainer.GetCanStateChange(TimelineContainer))
+                {
+                    await StateContainer.ChangeStateWithAnimation(TimelineContainer,
+                            state,
+                            (element, token) => element.TranslateTo(-200, 0, 150, Easing.CubicIn).WaitAsync(token),
+                            (element, token) => element.TranslateTo(0, 0, 350, Easing.CubicOut).WaitAsync(token),
+                            CancellationToken.None);
+                }
             })
             .DisposeWith(disposable);
         });
