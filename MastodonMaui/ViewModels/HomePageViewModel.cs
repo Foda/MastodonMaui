@@ -38,7 +38,8 @@ namespace MastodonMaui.ViewModels
 
             Items = new ObservableCollection<StatusViewModel>();
 
-            RefreshTimeline = ReactiveCommand.CreateFromTask(RefreshTimeline_Impl);
+            RefreshTimeline = ReactiveCommand.CreateFromTask(RefreshTimeline_Impl,
+                outputScheduler: RxApp.MainThreadScheduler);
             LoadMoreTimelineItems = ReactiveCommand.CreateFromTask(LoadMoreTimelineItems_Impl);
 
             _isLoading = RefreshTimeline.IsExecuting.ToProperty(this, nameof(IsLoading));

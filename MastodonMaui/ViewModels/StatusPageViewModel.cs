@@ -38,10 +38,11 @@ namespace MastodonMaui.ViewModels
             FetchStatusContext = ReactiveCommand
                 .CreateFromObservable(() => 
                     Observable.StartAsync(ct => FetchStatusContext_Impl(ct))
-                              .TakeUntil(this.NavigateBack));
+                              .TakeUntil(this.NavigateBack), outputScheduler: RxApp.MainThreadScheduler);
             NavigateBack = ReactiveCommand.Create(() => { });
 
-            _isLoading = FetchStatusContext.IsExecuting.ToProperty(this, nameof(IsLoading));
+            _isLoading = FetchStatusContext.IsExecuting.ToProperty(this, nameof(IsLoading),
+                scheduler: RxApp.MainThreadScheduler);
 
             this.WhenAnyValue(vm => vm.ParentStatus)
                 .Where(status => status != null)

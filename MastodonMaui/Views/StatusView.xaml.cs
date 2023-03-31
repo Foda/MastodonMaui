@@ -43,7 +43,7 @@ public partial class StatusView : ReactiveContentView<StatusViewModel>
             this.OneWayBind(ViewModel, vm => vm.CreatedAt, v => v.CreatedAt.Text)
                 .DisposeWith(disposable);
 
-            this.OneWayBind(ViewModel, vm => vm.Content, v => v.Content.Text)
+            this.OneWayBind(ViewModel, vm => vm.Content, v => v.StatusContent.Text)
                 .DisposeWith(disposable);
 
             // Reblog

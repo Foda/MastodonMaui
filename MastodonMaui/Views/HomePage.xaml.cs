@@ -15,16 +15,17 @@ public partial class HomePage : ReactiveContentPage<HomePageViewModel>
     {
         InitializeComponent();
 
+        ISiteInstance siteInstance = Locator.Current.GetService<ISiteInstance>();
+        ICurrentUserService currentUser = Locator.Current.GetService<ICurrentUserService>();
+
+        this.NewPostView.ViewModel = new(null, siteInstance);
+        this.TrendingView.ViewModel = new(siteInstance);
+        this.CurrentStatus.ViewModel = new StatusPageViewModel();
+
         this.WhenActivated(disposable =>
         {
-            ISiteInstance siteInstance = Locator.Current.GetService<ISiteInstance>();
-            ICurrentUserService currentUser = Locator.Current.GetService<ICurrentUserService>();
-
             this.ViewModel = new(siteInstance);
-            this.TrendingView.ViewModel = new(siteInstance);
-            this.NewPostView.ViewModel = new(null, siteInstance);
             this.CurrentUserView.ViewModel = new CurrentUserViewModel(currentUser.Account, siteInstance);
-            this.CurrentStatus.ViewModel = new StatusPageViewModel();
             this.CurrentStatus.ViewModel.NavigateBack.Subscribe(_ =>
             {
                 this.ViewModel.SelectedStatus = null;

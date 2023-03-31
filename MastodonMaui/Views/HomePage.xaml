@@ -44,11 +44,11 @@
             Grid.Column="1"
             x:Name="TimelineContainer">
             <toolkit:StateContainer.StateViews>
-                    <!--RemainingItemsThresholdReachedCommand="{Binding LoadMoreTimelineItems}"-->
                 <CollectionView
                     x:Name="StatusItems"
                     SelectionMode="Single"
                     toolkit:StateView.StateKey="timeline"
+                    RemainingItemsThresholdReachedCommand="{Binding LoadMoreTimelineItems}"
                     WidthRequest="600">
                     <CollectionView.Header>
                         <Border

@@ -6,8 +6,8 @@ namespace MastodonMaui.Services
 {
     internal class OAuthTokenService : IAuthTokenStore
     {
-        private readonly string _clientId = "6GJ0z5KyfVJ1iAbUKRk903035JEZEFfIb1mOsbhDrFg";
-        private readonly string _clientSecret = "g9tGAmQ8mUQZpwzRZcZhWnxD4GgjCrXX_haGw6xoa_I";
+        private readonly string _clientId = "ADD_HERE";
+        private readonly string _clientSecret = "ADD_HERE";
         private readonly string _instanceUrl;
         private readonly MastodonAuthClient _authClient;
 
