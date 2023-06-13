@@ -36,7 +36,7 @@
             </Style>
 
             <Style x:Key="SectionCardBorder" TargetType="Border">
-                <Setter Property="Padding" Value="12,8,12,8" />
+                <Setter Property="Padding" Value="16,16,16,16" />
                 <Setter Property="StrokeShape" Value="RoundRectangle 8"/>
                 <Setter Property="BackgroundColor" Value="#333333"/>
                 <Setter Property="StrokeThickness" Value="0.5"/>

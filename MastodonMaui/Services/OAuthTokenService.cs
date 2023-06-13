@@ -15,7 +15,6 @@ namespace MastodonMaui.Services
         private string _authToken = "";
 
         private const string CALLBACK_URI = "mastoauth://";
-        private const string STORAGE_AUTH_CODE_KEY = "oauth_code";
         private const string STORAGE_AUTH_TOKEN_KEY = "oauth_token";
         private const string STORAGE_AUTH_TOKEN_CREATED = "oauth_token_created_at";
 
@@ -36,14 +35,9 @@ namespace MastodonMaui.Services
         {
             // Try and get the existing token. If we don't have one start the oauth login flow
             _authToken = await SecureStorage.Default.GetAsync(STORAGE_AUTH_TOKEN_KEY);
-            if (string.IsNullOrEmpty(_authToken))
-            {
-                _authCode = await SecureStorage.Default.GetAsync(STORAGE_AUTH_CODE_KEY);
-            }
-
             if (string.IsNullOrEmpty(_authToken) && string.IsNullOrEmpty(_authCode))
             {
-                await GetOAuthCode();
+                _authCode = await GetOAuthCode();
             }
 
             if (string.IsNullOrEmpty(_authToken))
@@ -59,7 +53,7 @@ namespace MastodonMaui.Services
             return _authToken;
         }
 
-        private async Task GetOAuthCode()
+        private async Task<string> GetOAuthCode()
         {
             string auth = $"{_instanceUrl}/oauth/authorize" +
                 $"?client_id={_clientId}" +
@@ -79,8 +73,7 @@ namespace MastodonMaui.Services
                     CallbackUrl = new Uri(CALLBACK_URI)
                 });
 #endif
-            _authCode = result.Properties["code"];
-            await SecureStorage.Default.SetAsync(STORAGE_AUTH_CODE_KEY, _authCode);
+            return result.Properties["code"];
         }
     }
 }

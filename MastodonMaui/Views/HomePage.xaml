@@ -53,14 +53,16 @@
                     <CollectionView.Header>
                         <Border
                             MaximumWidthRequest="580"
-                            Style="{StaticResource SectionCardBorder}">
+                            Style="{StaticResource SectionCardBorder}"
+                            Padding="16">
                             <VerticalStackLayout>
                                 <Grid>
                                     <Label
                                         Text="Home"
                                         Style="{StaticResource TitleLabel}"
                                         VerticalOptions="Center"
-                                        HorizontalOptions="Start"/>
+                                        HorizontalOptions="Start"
+                                        Margin="4,0,0,0"/>
 
                                     <Button
                                         x:Name="RefreshButton"

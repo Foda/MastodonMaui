@@ -40,7 +40,7 @@ public partial class StatusView : ReactiveContentView<StatusViewModel>
                 .DisposeWith(disposable);
             this.OneWayBind(ViewModel, vm => vm.Account.UserName, v => v.UserName.Text, username => $"@{username}")
                 .DisposeWith(disposable);
-            this.OneWayBind(ViewModel, vm => vm.CreatedAt, v => v.CreatedAt.Text)
+            this.OneWayBind(ViewModel, vm => vm.CreatedAtHuman, v => v.CreatedAt.Text)
                 .DisposeWith(disposable);
 
             this.OneWayBind(ViewModel, vm => vm.Content, v => v.StatusContent.Text)

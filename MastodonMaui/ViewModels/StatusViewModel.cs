@@ -1,4 +1,5 @@
-﻿using MastodonLib.Models;
+﻿using Humanizer;
+using MastodonLib.Models;
 using MastodonMaui.Services;
 using ReactiveUI;
 using Splat;
@@ -31,6 +32,7 @@ namespace MastodonMaui.ViewModels
 
         public string Content => IsReblog ? _model.Reblog.Content : _model.Content;
         public DateTime CreatedAt => IsReblog ? _model.Reblog.CreatedAt : _model.CreatedAt;
+        public string CreatedAtHuman => CreatedAt.Humanize();
         internal Account Account => IsReblog ? _model.Reblog.Account : _model.Account;
 
         public int ReblogCount => IsReblog ? _model.Reblog.ReblogsCount : _model.ReblogsCount;

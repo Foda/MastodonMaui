@@ -4,6 +4,7 @@
              xmlns:rxMaui="clr-namespace:ReactiveUI.Maui;assembly=ReactiveUI.Maui"
              xmlns:views="clr-namespace:MastodonMaui.Views"
              xmlns:viewModels="clr-namespace:MastodonMaui.ViewModels"
+             xmlns:controls="clr-namespace:MastodonMaui.Controls"
              x:Class="MastodonMaui.Views.StatusView"
              x:TypeArguments="viewModels:StatusViewModel">
     <Grid>
@@ -90,11 +91,9 @@
                 x:Name="UserName"
                 Opacity="0.75"
                 Margin="0,-4,0,0"/>
-            
-            <Label
-                x:Name="StatusContent"
-                TextType="Html"
-                Style="{StaticResource BodyLabel}"/>
+
+            <controls:StatusTextControl
+                x:Name="StatusContent"/>
 
             <FlexLayout
                 x:Name="ImageMediaAttachments"
